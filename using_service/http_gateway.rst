@@ -25,6 +25,7 @@ I can attach this service to an HTTP Gateway as follows:
 .. note:: by default this exposes all of the functions which you specified in your IDL. To expose a single function, you can pass the argument 'entry=myFunc'
 
 If I wanted to double-check it is running 
+
 .. code :: bash
 
  $ nstack ps | grep http
