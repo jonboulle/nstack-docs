@@ -58,11 +58,11 @@
 <p class="first admonition-title">Note</p>
 <p class="last">by default this exposes all of the functions which you specified in your IDL. To expose a single function, you can pass the argument &#8216;entry=myFunc&#8217;</p>
 </div>
-<p>If I wanted to double-check it is running
-.. code :: bash</p>
-<blockquote>
-<div>$ nstack ps | grep http
-[a2aa1b] [http (<a class="reference external" href="http://nstack-vm/services/gateway-test">http://nstack-vm/services/gateway-test</a>)], gateway-test, Leo Anthias</div></blockquote>
+<p>If I wanted to double-check it is running</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack ps | grep http
+[a2aa1b] [http (http://nstack-vm/services/gateway-test)], gateway-test, Leo Anthias
+</pre></div>
+</div>
 <p>Now I can call a function via HTTP PUT.</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ curl -H &#39;Content-Type: application/json&#39; -XPUT http://nstack-vm/services/gateway-test -d &#39;{ &quot;method&quot; : &quot;Add&quot;, &quot;params&quot; : [1,2] }&#39;
 { result : 3 }

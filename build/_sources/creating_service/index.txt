@@ -8,7 +8,7 @@ In this section we describe the individual components used when creating a nstac
 
 .. toctree::
    
-   stackhut_toolkit
+   nstack_toolkit
    service_structure
    app_structure
 

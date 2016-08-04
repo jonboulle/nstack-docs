@@ -69,11 +69,20 @@ Help for any command can be displayed by running,
 
 Displays information regarding the CLI version
 
+``remote``
+^^^^^^^^^
+**TODO-mandeep**
+.. code:: bash
+
+    $ nstack remote nstack-host
+
+Set the hosted nstack server which you would like to use. 
+
 ``init``
 ^^^^^^^^
 .. code:: bash
 
-    $ nstack init stack 
+    $ nstack init stack
 
 ============    ===========
 Option          Description
@@ -96,6 +105,7 @@ The ``init`` command also creates a git repo and commits the files be default.
 
 ``build``
 ^^^^^^^^^
+**TODO-mandeep**
 
 .. code:: bash
 
@@ -107,54 +117,72 @@ Option          Description
 ``--force``     Forces the build to occur even if no file changes 
 ============    ===========
 
-Builds the image so that it may be tested locally or deployed to the your hosted nstack instance. This command is usually unneeded as both the ``run`` and ``deploy`` commands run a build if needed.
+Builds the image on your hosted nstack instance. This command is usually unneeded as the ``boot`` command runs a build if needed.
 
-Building a service involves, 
-* setting up the base OS and the language stack,
-* installing all OS and language packages as specified in the `Hutfile`,
-* copying across all files referenced in the `Hutfile`,
-* installing the StackHut control runner,
-* running any auxiliary commands as specified in the `Hutfile`.
+``deploy``
+^^^^^^^^^
+**TODO-mandeep**
 
-Building can be time-consuming so is performed on an as-needed basis by detecting changes to the files referenced from the `Hutfile`. If this fails, or perhaps you're installing software from across the network as part of the build, you may wish to force the build to occur by passing the ``--force`` flag.
+.. code:: bash
 
+    $ nstack boot 
 
-``run``
+Deploys your service onto your nstack server. Once a service is deployed, it can be attached to event-sources. 
+
+``trigger``
+^^^^^^^^^
+**TODO-mandeep**
+
+.. code:: bash
+
+    $ nstack trigger service event-source [entry=]
+
+============    ===========
+Option          Description
+============    ===========
+``entry=``      The function to send the event into
+============    ===========
+
+Attaches your service to an event-source. When an event is recieved, your service runs. 
+
+``ps``
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
-    $ stackhut runcontainer [--force]
-
-================    ===========    
-Option              Description
-================    ===========
-``--force``         Forces build before run 
-================    ===========
+    $ nstack ps
 
 
-Builds the image and and hosts the service locally on ``http://localhost:4001``. You can test the service either using the client-libaries or by ``curl``-ing the ``test_request.json`` file to the local server, as described in :ref:`using_index`.
+Shows a list of all services which are *active* on your nstack server (i.e. they are been bound to an event-source). You can think of these as 'processes'. This is distincy from ``ls``, which shows you the services which have been deployed and are available to run. 
 
-Upon running this command the Toolkit will build the image (if required) and run the service within the container. This is exactly the same code as will be run on the hosted StackHut platform so you can be sure that if it works locally it will work in the cloud. Output from running this request is placed in the ``run_result`` directory, with the JSON response object in ``run_result\response.json``.
+``kill``
+^^^^^^^^^^^^^^^^
+
+.. code:: bash
+
+    $ nstack kill process
 
 
-``deploy``
+Stop a running process.
+
+``ls``
 ^^^^^^^^^^
 
 .. code:: bash
 
-    $ stackhut deploy [--force]
+    $ nstack ls
 
-================    ===========
-Option              Description
-================    ===========
-``--force``         Forces build before deploy
-================    ===========
 
-.. ``--no-build``      Deploy only, do not build or push image first
+Shows a list of all available services on your nstack server. These may or may not be running processes (i.e. attached to event-sources).
 
-The deploy command packages and uploads your project to the StackHut platform where it's build remotely and then deployed live under the service address ``username/servicename`` and can be called from ``https://api.stackhut.com/run``. 
-Deployment requires that you have an account at StackHut and are logged in using the command line tool.
+``rm``
+^^^^^^^^^^^^^^^^
 
-.. If you've already deployed the image and just want to update the service metadata, e.g. the description, README, API docs, etc., you can run ``deploy`` with the ``--no-build`` flag and it will skip the full deploy - a much quicker operation.
+.. code:: bash
+
+    $ nstack rm service
+
+
+Deletes a service which from your nstack host. 
+
 
