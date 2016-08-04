@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>General Usage Notes &mdash; StackHut 0.1.x documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="StackHut 0.1.x documentation" href="../index.html" />
+    <link rel="up" title="Using a Service" href="index.html" />
+    <link rel="next" title="Client-side Libraries" href="client_libs.html" />
+    <link rel="prev" title="Using a Service" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="general-usage-notes">
+<span id="using-general"></span><h1>General Usage Notes<a class="headerlink" href="#general-usage-notes" title="Permalink to this headline">¶</a></h1>
+<p>StackHut services can be accessed easily either through client side libraries, or directly using the underlying JSON+HTTP protocol. Either way there are several pints to note to make communicating with your services as easy and efficient as possible.</p>
+<div class="section" id="files">
+<span id="using-general-files"></span><h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p>Often you will want to pass a file from your code to be processed by a StackHut service, for instance when processing a video or converting a PDF.</p>
+<p>Currently files must to be uploaded separately to a online location from where they can be retrieved by the service over HTTP, for instance AWS S3, rather than embedded within the remote message.</p>
+<p>To aid this we provide an endpoint, <code class="docutils literal"><span class="pre">https://api.stackhut.com/files</span></code>, that you can <code class="docutils literal"><span class="pre">POST</span></code> to obtain a signed URL. The content of this <code class="docutils literal"><span class="pre">POST</span></code> request is a single JSON object, <code class="docutils literal"><span class="pre">auth</span></code>, that contains both the username and either a <code class="docutils literal"><span class="pre">hash</span></code> or <code class="docutils literal"><span class="pre">token</span></code> element, similar to <code class="docutils literal"><span class="pre">SHAuth</span></code> above,</p>
+<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;auth&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;username&quot;</span> <span class="p">:</span> <span class="s2">&quot;USERNAME&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;hash&quot;</span> <span class="p">:</span> <span class="s2">&quot;HASH&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The request returns a single object containing both, <code class="docutils literal"><span class="pre">key</span></code>, a signed URL to which you may <code class="docutils literal"><span class="pre">PUT</span></code> a resource, and <code class="docutils literal"><span class="pre">key</span></code>, a key to be passed to the StackHut service identifying the file. Within the StackHut service, a service author can call <cite>stackhut.get_file(key)</cite> from the StackHut runtime library (see <a class="reference internal" href="../creating_service/service_runtime.html#creating-runtime"><span>StackHut Runtime Library</span></a>) to download the file to the working directory.
+We recognise this is an extra step and are working hard to remove this limitation. File handling using this endpoint is not supported in the client libraries at present.</p>
+<p>Result files can are automatically placed onto S3 for easy retrieval by clients although can be uploaded elsewhere if required.</p>
+</div>
+<div class="section" id="authentication">
+<span id="using-general-auth"></span><h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>Authentication is provided within StackHut - this is used restrict service requests to the service author and explicitly allowed clients only. This can be enabled or disabled on a per-service basis by setting <code class="docutils literal"><span class="pre">private</span></code> to <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">False</span></code> respectively within the <code class="docutils literal"><span class="pre">Hutfile.yaml</span></code>.</p>
+<p>Authentication requires specifying both the StackHut <code class="docutils literal"><span class="pre">username</span></code> and either the user <code class="docutils literal"><span class="pre">hash</span></code> or a generatated API token that can be shared with clients. A registered StackHut user&#8217;s <code class="docutils literal"><span class="pre">hash</span></code> can be found by running <code class="docutils literal"><span class="pre">stackhut</span> <span class="pre">info</span></code> and can used with private services to authenticate the user.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not share your hash or use it directly within code that is run on untrusted devices, e.g. client-side JS. Generate and use an API token instead (however, API Tokens are currently in development. sorry!)</p>
+</div>
+<p>Authentication is supported within the client-side libs - create an <code class="docutils literal"><span class="pre">SHAuth</span></code> object and pass it to the <code class="docutils literal"><span class="pre">SHService</span></code>, as shown in <a class="reference internal" href="client_libs.html#using-client-libs"><span>Client-side Libraries</span></a>.
+This <code class="docutils literal"><span class="pre">auth</span></code> object is added at the top-level to service message, in accordance with the JSON-RPC protocol described in <a class="reference internal" href="json_rpc.html#using-json-rpc"><span>Direct JSON-RPC Usage</span></a>. You may need to do this manually if creating JSON-RPC messages directly,</p>
+<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;auth&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;username&quot;</span> <span class="p">:</span> <span class="s2">&quot;$USERNAME&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;hash&quot;</span> <span class="p">:</span> <span class="s2">&quot;$HASH&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>By default if an <code class="docutils literal"><span class="pre">auth</span></code> object exists in the request it is check by the API layer and only allowed through to the service if the auth object is valid for <strong>any</strong> StackHut user, regardless if the service is public or private. Authorisation is handled within services themselves, as described in <span class="xref std std-ref">creating_app_auth</span>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To call a public service anonymously it&#8217;s easiest to just not add an <code class="docutils literal"><span class="pre">auth</span></code> object to the request. We&#8217;re aware that this can be confusing and are working on a simpler API.</p>
+</div>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>Similar to files, we are currently hard at work on providing a standardised solution to handling state within a service - services are generally state-less by default and are fully destroyed and reconstructed between requests.</p>
+<p>However, setting <code class="docutils literal"><span class="pre">persistent:</span> <span class="pre">True</span></code> in the <code class="docutils literal"><span class="pre">Hutfile.yaml</span></code> with keep the service alive between calls, and can be used to store state within application memory/local filesystem during the life-cycle of a service. This can be used, for instance, to cache long-running/complex computations or to keep database connections open. However due to the nature of the platform services may be restarted at anytime without warning and we recommend  treating this state as ephemeral.</p>
+<p>To store state persistently, outside of the service life-cycle, it&#8217;s possible to call and store data on an external platform, e.g. a hosted database, on an individual service basis. This is currently outside of StackHut&#8217;s scope and you&#8217;ll have to refer to your favourite hosted database documentation to integrate it with your chosen service language.</p>
+</div>
+<div class="section" id="batching">
+<h2>Batching<a class="headerlink" href="#batching" title="Permalink to this headline">¶</a></h2>
+<p>We have currently only described StackHut as performing a single request per call, however it&#8217;s also possible to collect several request and perform them sequentially within a single call. This is termed <code class="docutils literal"><span class="pre">batching</span></code> mode and is easily accomplished in StackHut by simply sending a list of reesusts within the <code class="docutils literal"><span class="pre">req</span></code> object in the call,</p>
+<div class="highlight-JSON"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;service&quot;</span> <span class="p">:</span> <span class="s2">&quot;stackhut/demo-nodejs-state&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;req&quot;</span> <span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;method&quot;</span> <span class="p">:</span> <span class="s2">&quot;inc&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+            <span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">1</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;method&quot;</span> <span class="p">:</span> <span class="s2">&quot;inc&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+            <span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">2</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;method&quot;</span> <span class="p">:</span> <span class="s2">&quot;getCur&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[]</span>
+            <span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">3</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These request will all be performed within a single service-call, great for increasing throughput and keeping your external calls over the cloud to StackHut to a minimum.
+We have some exciting features planned involving batching that will allow you to setup complex cloud-based processing pipelines easily.</p>
+<p>Batching is not supported in the client libraries at present.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">General Usage Notes</a><ul>
+<li><a class="reference internal" href="#files">Files</a></li>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#state">State</a></li>
+<li><a class="reference internal" href="#batching">Batching</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Using a Service</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Using a Service</a></li>
+      <li>Next: <a href="client_libs.html" title="next chapter">Client-side Libraries</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/using_service/general.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, StackHut.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/using_service/general.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

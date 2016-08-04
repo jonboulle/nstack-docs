@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>StackHut Runtime Library &mdash; StackHut 0.1.x documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="StackHut 0.1.x documentation" href="../index.html" />
+    <link rel="up" title="Creating a Service" href="index.html" />
+    <link rel="next" title="Using a Service" href="../using_service/index.html" />
+    <link rel="prev" title="Service Project Structure" href="service_structure.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="stackhut-runtime-library">
+<span id="creating-runtime"></span><h1>StackHut Runtime Library<a class="headerlink" href="#stackhut-runtime-library" title="Permalink to this headline">¶</a></h1>
+<p>When running a StackHut service there are many common functions you may wish to perform and interact with the host environment, be it running locally on your machine or when hosted on the StackHut platform.</p>
+<p>In this section we describe the StackHut library full of common functionality you can use in your service to make the process a lot easier.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The StackHut library is available on all supported language stacks.
+It exposes a common set of functions across them all for interacting with the hosting platform and the wider world when running a service.</p>
+<p>In most languages you simply import the <code class="docutils literal"><span class="pre">stackhut</span></code> module within your service and use the functions directly. (If you used <code class="docutils literal"><span class="pre">stackhut</span> <span class="pre">init</span></code> this will already be done within the created skeleton service.)</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="download-file">
+<h3>download_file<a class="headerlink" href="#download-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Downloads a file from the given <code class="docutils literal"><span class="pre">url</span></code> into the working directory. If <code class="docutils literal"><span class="pre">fname</span></code> is provided will rename the download file to this value, else will use the original filename.</p>
+<p>Returns the filename of the downloaded file.</p>
+</div>
+<div class="section" id="get-file">
+<h3>get_file<a class="headerlink" href="#get-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function is used to download files uploaded using the <code class="docutils literal"><span class="pre">/files</span></code> endpoint (see <a class="reference internal" href="../using_service/general.html#using-general-files"><span>Files</span></a>). It securly downloads the file refernced by the given <code class="docutils literal"><span class="pre">key</span></code> into the working directory and returns the filename.</p>
+</div>
+<div class="section" id="put-file">
+<h3>put_file<a class="headerlink" href="#put-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">put_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">make_public</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function uploads the file referenced by <code class="docutils literal"><span class="pre">fname</span></code> in the service working directory to cloud storage (S3) where it can be downloaded by yourself or others.
+<code class="docutils literal"><span class="pre">make_public</span></code> is an optional boolean that triggers whether the uploaded file is made accessible as a public URL, by default this is True.</p>
+<p>Returns the URL of the uploaded file.</p>
+</div>
+<div class="section" id="get-stackhut-user">
+<h3>get_stackhut_user<a class="headerlink" href="#get-stackhut-user" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">get_stackhut_user</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the authenticated StackHut username of the request originator as a string, or <code class="docutils literal"><span class="pre">null</span></code> if not present. This has been authenticated by the server and can be used securely to know who made the request.</p>
+</div>
+<div class="section" id="is-author">
+<h3>is_author<a class="headerlink" href="#is-author" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">is_author</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns <code class="docutils literal"><span class="pre">True</span></code> if the authenticated StackHut user who made the request is the service author, authenticated either using the author hash or via a valid token tied to that account (see <a class="reference internal" href="../using_service/general.html#using-general-auth"><span>Authentication</span></a>).</p>
+</div>
+<div class="section" id="run-command">
+<h3>run_command<a class="headerlink" href="#run-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stackhut</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Runs the command specified by <code class="docutils literal"><span class="pre">cmd</span></code> as an external process and waits for completeion. <code class="docutils literal"><span class="pre">stdin</span></code> is an optional string that, when specified, will be used as the STDIN to the command.</p>
+<p>Function waits for the subprocess to complete and returns STDOUT as a string.</p>
+</div>
+</div>
+<div class="section" id="general-notes">
+<h2>General Notes<a class="headerlink" href="#general-notes" title="Permalink to this headline">¶</a></h2>
+<p>All functions are blocking by default, however each call runs in a separate thread so you may make multiple calls without blocking the runtime library itself. However dealing with the associate blocking on the client side is a matter for your particular service and language stack. This issue is described further in <span class="xref std std-ref">creating_app</span>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">StackHut Runtime Library</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#download-file">download_file</a></li>
+<li><a class="reference internal" href="#get-file">get_file</a></li>
+<li><a class="reference internal" href="#put-file">put_file</a></li>
+<li><a class="reference internal" href="#get-stackhut-user">get_stackhut_user</a></li>
+<li><a class="reference internal" href="#is-author">is_author</a></li>
+<li><a class="reference internal" href="#run-command">run_command</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#general-notes">General Notes</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Creating a Service</a><ul>
+      <li>Previous: <a href="service_structure.html" title="previous chapter">Service Project Structure</a></li>
+      <li>Next: <a href="../using_service/index.html" title="next chapter">Using a Service</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/creating_service/service_runtime.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, StackHut.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/creating_service/service_runtime.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

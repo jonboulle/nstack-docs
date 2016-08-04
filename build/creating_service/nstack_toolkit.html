@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nstack CLI &mdash; StackHut 0.1.x documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="StackHut 0.1.x documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nstack-cli">
+<span id="id1"></span><h1>nstack CLI<a class="headerlink" href="#nstack-cli" title="Permalink to this headline">¶</a></h1>
+<p>The nstack CLI is used to create, test, deploy, and maintain your services hosted on nstack.
+It provides a range of commands used to interact with your code and the nstack servers.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Firstly, install the CLI and requirements by following the instructions in <a class="reference internal" href="../getting_started/installation.html#getting-started-installation"><span>Platform Installation</span></a>.</p>
+<p><strong>Quick Install</strong></p>
+<div class="code bash highlight-python"><div class="highlight"><pre>curl https://nstack.com/install/install.sh | sh
+</pre></div>
+</div>
+<p><strong>Update</strong></p>
+<div class="code bash highlight-python"><div class="highlight"><pre>nstack --update
+**TODO**
+</pre></div>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>Having installed the CLI, make sure it&#8217;s accessible from your path</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack -V
+&gt; nstack 0.5.4
+</pre></div>
+</div>
+<p>Now that&#8217;s done, you may wish to run through the tutorial at <span class="xref std std-ref">tutorial_create</span>.</p>
+<p>You can find the list of commands and options available by running,</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack --help
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Enable verbose mode to view more debug output using <code class="docutils literal"><span class="pre">nstack</span> <span class="pre">-v</span></code>.</p>
+</div>
+</div>
+<div class="section" id="commands">
+<h3>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h3>
+<p>In this section we&#8217;ll go over the main commands supported by the Toolkit and explain their use in helping you to build, test, deploy and maintain your services locally and in the cloud.</p>
+<p>Help for any command can be displayed by running,</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack command --help
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="info">
+<h2><code class="docutils literal"><span class="pre">info</span></code><a class="headerlink" href="#info" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack info
+</pre></div>
+</div>
+<p>Displays information regarding the CLI version</p>
+</div>
+<div class="section" id="init">
+<h2><code class="docutils literal"><span class="pre">init</span></code><a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack init stack
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">stack</span></code></td>
+<td>The default language stack to use, e.g. python, nodejs, etc.</td>
+</tr>
+</tbody>
+</table>
+<p>Initialises a new nstack project in the current directory using the specified base language stack. This creates a working skeleton project which you can modify to rapidly build your own service.</p>
+<p>By default it creates a service in your stack that has a single <code class="docutils literal"><span class="pre">add</span></code> function already specified. The initial project is comprised of the following files,
+<strong>TODO-mandeep</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">nstack.yaml</span></code>, your service&#8217;s config file  (see <a class="reference internal" href="service_structure.html#creating-structure-hutfile"><span>Hutfile</span></a>),</li>
+<li>an <code class="docutils literal"><span class="pre">api.idl</span></code> Interface Definition File, which is where you choose which parts of your code you want to expose (see <span class="xref std std-ref">creating_app_idl</span>),</li>
+<li>an <code class="docutils literal"><span class="pre">app.py</span></code> application file (or app.js, etc.),</li>
+<li>a <code class="docutils literal"><span class="pre">README.md</span></code> markdown file,</li>
+<li>an empty packages file for your chosen language stack (e.g. <code class="docutils literal"><span class="pre">requirements.txt</span></code> for Python, or <code class="docutils literal"><span class="pre">package.json</span></code> for Node, etc.).</li>
+</ul>
+<p>The <code class="docutils literal"><span class="pre">init</span></code> command also creates a git repo and commits the files be default.</p>
+</div>
+<div class="section" id="build">
+<h2><code class="docutils literal"><span class="pre">build</span></code><a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ nstack build [--force]
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--force</span></code></td>
+<td>Forces the build to occur even if no file changes</td>
+</tr>
+</tbody>
+</table>
+<p>Builds the image so that it may be tested locally or deployed to the your hosted nstack instance. This command is usually unneeded as both the <code class="docutils literal"><span class="pre">run</span></code> and <code class="docutils literal"><span class="pre">deploy</span></code> commands run a build if needed.</p>
+<p>Building a service involves,
+* setting up the base OS and the language stack,
+* installing all OS and language packages as specified in the <cite>Hutfile</cite>,
+* copying across all files referenced in the <cite>Hutfile</cite>,
+* installing the StackHut control runner,
+* running any auxiliary commands as specified in the <cite>Hutfile</cite>.</p>
+<p>Building can be time-consuming so is performed on an as-needed basis by detecting changes to the files referenced from the <cite>Hutfile</cite>. If this fails, or perhaps you&#8217;re installing software from across the network as part of the build, you may wish to force the build to occur by passing the <code class="docutils literal"><span class="pre">--force</span></code> flag.</p>
+</div>
+<div class="section" id="run">
+<h2><code class="docutils literal"><span class="pre">run</span></code><a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ stackhut runcontainer [--force]
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--force</span></code></td>
+<td>Forces build before run</td>
+</tr>
+</tbody>
+</table>
+<p>Builds the image and and hosts the service locally on <code class="docutils literal"><span class="pre">http://localhost:4001</span></code>. You can test the service either using the client-libaries or by <code class="docutils literal"><span class="pre">curl</span></code>-ing the <code class="docutils literal"><span class="pre">test_request.json</span></code> file to the local server, as described in <a class="reference internal" href="../using_service/index.html#using-index"><span>Using a Service</span></a>.</p>
+<p>Upon running this command the Toolkit will build the image (if required) and run the service within the container. This is exactly the same code as will be run on the hosted StackHut platform so you can be sure that if it works locally it will work in the cloud. Output from running this request is placed in the <code class="docutils literal"><span class="pre">run_result</span></code> directory, with the JSON response object in <code class="docutils literal"><span class="pre">run_result\response.json</span></code>.</p>
+</div>
+<div class="section" id="deploy">
+<h2><code class="docutils literal"><span class="pre">deploy</span></code><a class="headerlink" href="#deploy" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ stackhut deploy [--force]
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--force</span></code></td>
+<td>Forces build before deploy</td>
+</tr>
+</tbody>
+</table>
+<p>The deploy command packages and uploads your project to the StackHut platform where it&#8217;s build remotely and then deployed live under the service address <code class="docutils literal"><span class="pre">username/servicename</span></code> and can be called from <code class="docutils literal"><span class="pre">https://api.stackhut.com/run</span></code>.
+Deployment requires that you have an account at StackHut and are logged in using the command line tool.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">nstack CLI</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#info"><code class="docutils literal"><span class="pre">info</span></code></a></li>
+<li><a class="reference internal" href="#init"><code class="docutils literal"><span class="pre">init</span></code></a></li>
+<li><a class="reference internal" href="#build"><code class="docutils literal"><span class="pre">build</span></code></a></li>
+<li><a class="reference internal" href="#run"><code class="docutils literal"><span class="pre">run</span></code></a></li>
+<li><a class="reference internal" href="#deploy"><code class="docutils literal"><span class="pre">deploy</span></code></a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/creating_service/nstack_toolkit.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, StackHut.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/creating_service/nstack_toolkit.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

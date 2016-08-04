@@ -1,0 +1,34 @@
+.. _http_gateway:
+
+nstack HTTP Gateway
+=====================
+
+Once your service has been deployed, you can attach it to the nstack HTTP Gateway. This lets you call your service over HTTP.
+
+Say we have a service which we have deployed called gateway-test:
+
+**TODO:all how do i specify remote vs. local vm?**
+
+.. code-block:: bash
+	$ nstack ls | grep gateway-test
+	[nstack] gateway-test, leo-anthias, Mon April 29 14:03
+
+I can attach this service to an HTTP Gateway as follows:
+
+.. code-block:: bash
+	$ nstack trigger gateway-test http
+	[nstack] Success: gateway-test is now available at http://nstack-vm/services/gateway-test
+
+.. Note: by default this exposes all of the functions in your idl file. To expose a single function, you can specify 'function=myFunc'
+
+Now I can call a function via HTTP PUT.
+
+..code-block:: bash
+	$ curl -H 'Content-Type: application/json' -XPUT http://nstack-vm/services/gateway-test -d '{ "method" : "Add", "params" : [1,2] }'
+	3
+
+
+
+
+
+

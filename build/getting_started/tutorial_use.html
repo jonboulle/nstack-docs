@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial - Using a Service &mdash; StackHut 0.1.x documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="StackHut 0.1.x documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial-using-a-service">
+<span id="tutorial-use"></span><h1>Tutorial - Using a Service<a class="headerlink" href="#tutorial-using-a-service" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial presents a quick overview of how to access a StackHut service from within your application, whether it is written in Python, client/server-side JS, Ruby, .NET, and more.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>All StackHut services can be accessed and consumed via a direct HTTP POST request. On receiving a request, the StackHut host platform will route the request on demand to the required service to  complete it.
+The whole StackHut infrastructure is abstracted away from your service code, from its point of view it&#8217;s simply executing a function call.</p>
+<p>It can then be accessed in the cloud via <a class="reference external" href="http://www.jsonrpc.org/">JSON-RPC</a> transported over a HTTP(S) POST request.
+To make it easier to call and use StackHut services we have started building client-libraries in several lanauges. They are described further in <a class="reference internal" href="../using_service/client_libs.html#using-client-libs"><span>Client-side Libraries</span></a>, and currently exist for Python and JavaScript.</p>
+<p>However it&#8217;s always possible to contsruct the JSON-RPC request yourself in any lanauge to consume a StackHut service - thankfully JSON-RPC is a very simple protocol, as shown in <a class="reference internal" href="../using_service/json_rpc.html#using-json-rpc"><span>Direct JSON-RPC Usage</span></a>, and this is much simpler than it sounds!</p>
+</div>
+<div class="section" id="selecting-a-service">
+<h2>Selecting a service<a class="headerlink" href="#selecting-a-service" title="Permalink to this headline">¶</a></h2>
+<p>You can find all kinds of services, for instance, video encoding, compression, compilation, web scraping, and more, hosted at the <a class="reference external" href="https://stackhut.com/#/services">StackHut repository</a>.</p>
+<p>Sercices are prefixed by their author, such as <code class="docutils literal"><span class="pre">stackhut/demo-python</span></code>. We can view the documentation and API for this service on its <a class="reference external" href="https://stackhut.com/#/u/stackhut/demo-python">homepage</a>, it has 2 methods, <code class="docutils literal"><span class="pre">add</span></code> and <code class="docutils literal"><span class="pre">multiply</span></code>.</p>
+</div>
+<div class="section" id="calling-a-service">
+<h2>Calling a service<a class="headerlink" href="#calling-a-service" title="Permalink to this headline">¶</a></h2>
+<p>For this tutorial we&#8217;ll use the <code class="docutils literal"><span class="pre">demo-python</span></code> service created in above (if you didn&#8217;t create one you can use <code class="docutils literal"><span class="pre">stackhut/demo-python</span></code> instead). We&#8217;ll use the Python 3.x client library (described in <a class="reference internal" href="../using_service/client_libs.html#using-client-libs"><span>Client-side Libraries</span></a>) to call this service.</p>
+<p>First we&#8217;ll create a <code class="docutils literal"><span class="pre">SHService</span></code> object to reference the service,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">stackhut_client</span> <span class="kn">as</span> <span class="nn">client</span>
+<span class="n">service</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">SHService</span><span class="p">(</span><span class="s">&#39;stackhut&#39;</span><span class="p">,</span> <span class="s">&#39;demo-python&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">stackhut</span></code> is the service author (replace with your own service name), and <code class="docutils literal"><span class="pre">demo-python</span></code> is the service name. Now we have the service we can just call the methods on the <code class="docutils literal"><span class="pre">Default</span></code> interface,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">service</span><span class="o">.</span><span class="n">Default</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="mi">3</span>
+<span class="n">service</span><span class="o">.</span><span class="n">Default</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<p>Thanks for reading this tutorial - you can find more information on calling services in <a class="reference internal" href="../using_service/index.html#using-index"><span>Using a Service</span></a>. Further detailes decribed how we built and can call more complex services, such as a web-scraper, or an image-processor, can be found in <span class="xref std std-ref">examples</span>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial - Using a Service</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#selecting-a-service">Selecting a service</a></li>
+<li><a class="reference internal" href="#calling-a-service">Calling a service</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting_started/tutorial_use.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, StackHut.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/getting_started/tutorial_use.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
