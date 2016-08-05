@@ -46,9 +46,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'StackHut'
-copyright = u'2015, StackHut'
-author = u'Team StackHut'
+project = u'nstack'
+copyright = u'2016, nstack'
+author = u'nstack'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -200,7 +200,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'StackHutdoc'
+htmlhelp_basename = 'nstackdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -222,7 +222,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'StackHut.tex', u'StackHut Documentation',
+  (master_doc, 'nstack.tex', u'nstack Documentation',
    u'Mandeep Gill \\& Leo Anthias', 'manual'),
 ]
 
@@ -252,7 +252,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'stackhut', u'StackHut Documentation',
+    (master_doc, 'nstack', u'nstack Documentation',
      [author], 1)
 ]
 
@@ -266,8 +266,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'StackHut', u'StackHut Documentation',
-   author, 'StackHut', 'One line description of project.',
+  (master_doc, 'nstack', u'nstack Documentation',
+   author, 'nstack', 'Algebraic Infrastructure.',
    'Miscellaneous'),
 ]
 

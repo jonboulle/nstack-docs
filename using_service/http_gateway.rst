@@ -6,7 +6,7 @@ nstack HTTP Gateway
 This section will explore attaching your service to the 'http' event, which is the nstack HTTP Gateway. This lets you call your service over HTTP.
 
 Say we have a service which we have deployed which is called gateway-test:
-
+**TODO: build a demo HTTP service too**
 **TODO: all how do i specify remote vs. local vm?**
 
 .. code:: bash

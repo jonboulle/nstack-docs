@@ -3,12 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to nstack's documentation!
+How the documentation is organized
 ====================================
 
-Thank you for browsing our documentation. Please let us know at docs@nstack.com if anything is unclear or you find a mistake. Better still, submit a pull-request using the link at the top-right. 
-
 Check out :ref:`getting_started_index` for a quick guide to both using and creating services on nstack.
+
+Please let us know at docs@nstack.com if anything is unclear or you find a mistake. Better still, submit a pull-request using the link at the top-right. 
 
 Contents:
 
@@ -24,12 +24,4 @@ Contents:
     examples/index
     misc/index
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
-.. * :ref:`modindex`
 
