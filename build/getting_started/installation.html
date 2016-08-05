@@ -41,9 +41,33 @@
             
   <div class="section" id="platform-installation">
 <span id="getting-started-installation"></span><h1>Platform Installation<a class="headerlink" href="#platform-installation" title="Permalink to this headline">¶</a></h1>
-<p>This page describes installing both the command-line nstack toolkit, and the nstack VM (which your services will live on.)</p>
-<p>All releases can be found on the nstack&#8217;s <a class="reference external" href="http://nstack.com/install">release page</a>.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>nstack is comprised of two parts: your nstack machine, which lives as a virtual appliance on your local network or cloud provider, and the nstack toolkit.</p>
+<p>The nstack machine is where your services are built, compiled, and executed, whilst the nstack toolkit is used to push services and administer the machine.</p>
+<p>As the machine is an appliance, you can run it locally (using something like kvm or virtualbox), or it can be hosted on your cloud provider of choice. You are not limited to one machine: many users have a machine on their cloud provider for production services, and a local machine for testing or staging.</p>
+<p><strong>*
+Installation
+*</strong></p>
+<p>..Note: All releases can be found on nstack&#8217;s <a class="reference external" href="http://nstack.com/install">release page</a>.</p>
+<p>To install the machine, browse to nstack&#8217;s <a class="reference external" href="http://nstack.com/install">release page</a>. We have helpers to let you install it to AWS, or you can download the .iso and host it where you please.</p>
+<blockquote>
+<div><ul class="simple">
+<li><span class="xref std std-ref">_aws_installation</span></li>
+<li><span class="xref std std-ref">_manual_installation</span></li>
+</ul>
+</div></blockquote>
+<p><strong>*
+AWS Installation
+*</strong></p>
 <p><strong>TODO</strong></p>
+<p>nstack provides a CloudFormation template to install to your AWS vpc.</p>
+<p><strong>*
+Manual Installation
+*</strong></p>
+<p><strong>TODO</strong></p>
+<p>nstack provides an .iso which you can host on your virtual machine of choice.</p>
+</div>
 </div>
 
 
@@ -51,7 +75,15 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Platform Installation</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
