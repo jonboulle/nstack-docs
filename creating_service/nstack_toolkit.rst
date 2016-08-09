@@ -13,20 +13,7 @@ It provides a range of commands used to interact with your code and the nstack s
 Getting Started
 ^^^^^^^^^^^^^^^
 
-Firstly, install the CLI and requirements by following the instructions in :ref:`getting_started_installation`. 
-
-**Quick Install**
-
-.. code:: bash
-
-    curl https://nstack.com/install/install.sh | sh
-    
-**Update**
-
-.. code:: bash
-
-    nstack --update
-    **TODO**
+Firstly, install the CLI and requirements by following the instructions in :ref:`CLI installation <CLI_installation>`. 
 
 Usage
 -----
@@ -103,7 +90,7 @@ By default it creates a service in your stack that has a single ``add`` function
 
 The ``init`` command also creates a git repo and commits the files be default.
 
-``build``
+``build`` [building/deploying]
 ^^^^^^^^^
 **TODO-mandeep**
 
@@ -119,23 +106,13 @@ Option          Description
 
 Builds the image on your hosted nstack instance. This command is usually unneeded as the ``boot`` command runs a build if needed.
 
-``deploy``
+``run/start`` [run/starting]
 ^^^^^^^^^
 **TODO-mandeep**
 
 .. code:: bash
 
-    $ nstack boot 
-
-Deploys your service onto your nstack server. Once a service is deployed, it can be attached to event-sources. 
-
-``trigger``
-^^^^^^^^^
-**TODO-mandeep**
-
-.. code:: bash
-
-    $ nstack trigger service event-source [entry=]
+    $ nstack run service [event-source] [entry=]
 
 ============    ===========
 Option          Description
@@ -145,7 +122,7 @@ Option          Description
 
 Attaches your service to an event-source. When an event is recieved, your service runs. 
 
-``ps``
+``ps`` [listing running service+event]
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
@@ -155,7 +132,7 @@ Attaches your service to an event-source. When an event is recieved, your servic
 
 Shows a list of all services which are *active* on your nstack server (i.e. they are been bound to an event-source). You can think of these as 'processes'. This is distincy from ``ls``, which shows you the services which have been deployed and are available to run. 
 
-``kill``
+``kill`` [stop a running service+event]
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
@@ -165,7 +142,7 @@ Shows a list of all services which are *active* on your nstack server (i.e. they
 
 Stop a running process.
 
-``ls``
+``ls`` [listing available/built services]
 ^^^^^^^^^^
 
 .. code:: bash
@@ -175,7 +152,7 @@ Stop a running process.
 
 Shows a list of all available services on your nstack server. These may or may not be running processes (i.e. attached to event-sources).
 
-``rm``
+``rm`` [remove service]
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
@@ -184,5 +161,8 @@ Shows a list of all available services on your nstack server. These may or may n
 
 
 Deletes a service which from your nstack host. 
+
+
+``status`` [logs/status of a service]
 
 

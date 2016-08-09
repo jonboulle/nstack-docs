@@ -1,9 +1,11 @@
-.. _getting_started_tutorial:
+.. _tutorial1:
 
-Tutorial
+Tutorial #1 -- Deploying a Service
 ========
 
-This tutorial briefly describes how you can develop, test and deploy a simple service on nstack. This one will only take a few minutes, but services can be as complex as you like. Firstly, check you've installed nstack as described in :ref:`getting_started_installation`. 
+This tutorial walks you through deploying a simple service on nstack; as a first example, we're using a demo service which squares a number (don't worry, we'll be adding to it in due course!)
+
+Before we begin, check you've installed nstack as described in :ref:`getting_started_installation`, and attached your toolkit to your nstack machine.
 
 Creating a Service
 ------------------
@@ -11,86 +13,107 @@ Creating a Service
 Initialise a Project
 ^^^^^^^^^^^^^^^^^^^^
 
-We start by initialising a nstack service, let's call this one ``demo-python``. 
+We start by initialising a nstack service, with the `--remote` flag. This simply pulls a service from a GitHub repository. 
 
 .. code-block:: bash
 
     # create and cd into the project directory
-    [~]$ mkdir demo-python
-    [~]$ cd demo-python
-    # run nstack init to initialise the project
-    [demo-python]$ nstack init python
+    [~]$ nstack init --remote=https://github.com/nstack-oss/example-service
+    [~]$ cd example-service
 
-The ``nstack init`` command takes one parameter, which is the language you'd like to build your service in. Here it is Python (short for Python 3). When you run init, nstack will create a working skeleton project for you to quickly get started with, including an initial Git commit.
-
-This contains all the files a nstack service needs, already configured using sensible defaults for the chosen system.
+This already contains all the files a nstack service needs.
 
 .. code-block:: bash
 
     [demo-python]$ ls
-    api.idl  app.py  nstack.yaml requirements.txt README.md
+    api.idl  app.py  nstack.yaml requirements.txt 
 
-There are several files here - and we'll cover the important ones in the following sections. They are all discussed further in :ref:`creating_structure_yaml`.
-The ``nstack.yaml`` is a *YAML* file containing configuration regarding dependencies. More information regarding its parameters can be found in :ref:`creating_structure_hutfile`.
+In the next section, we'll walk through these files:
 
-.. There is a README.md markdown file to further describe your service.
+Service structure
+^^^^^^^^^^^^^^^^^^^^
+``app.py``
+^^^^^^^^^^
+
+This is a simple python class which comprises your service. As you can see, we're not doing anything particularly exciting here, but this could be as complex as you please.
+
+.. code-block:: python
+	#!/usr/bin/env python3
+	# -*- coding: utf-8 -*-
+	import nstack	
+
+	class ExampleService(nstack.Service):
+		def square(number):
+			return number * number
 
 
-Signature
+
+``nstack.yaml``
+^^^^^^^^^
+The ``nstack.yaml`` is a *YAML* file containing configuration. Here, it includes any dependencies your service has, the stack (or runtime) for your service, and any operating system dependencies (which are *yum* packages). Because our service is boring at the moment, we don't have any dependencies (yet!)
+
+.. code-block:: yaml
+	
+	# Service name (a combination of lower case letters, numbers, and dashes)
+	name: image-process
+
+	# The language runtime
+	stack: python
+
+``api.idl``
 ^^^^^^^^^
 
-The ``api.idl`` interface-definition (IDL) file describes our service interface. This is a place to specify the inputs into your code; or, to think of it the other way around, the parts of your code you want to expose. 
+The ``api.idl`` is an interface-definition (IDL) file which describes our service interface. This is a place to specify the inputs into your code; or, to think of it the other way around, the parts of your code you want to expose. 
 
-One of the features of nstack is that your inputs can (optionally) be type-checked. This means you can make sure that your code is getting the right input. Additionally, knowing the inputs and outputs of a service allows you to compose them together intelligently. We like to think of it as bringing the power of statically-typed languages to infrastructure.
+.. code-block:: java
 
-**TODO**
+	ExampleService {
+		sqrt(int) : int
+	}
+
+One of the features of nstack is that your inputs is type-checked. Here, we are saying we want to expose our function ``sqrt`` which takes an ``int`` and returns an ``int``.
+
+``requirements.txt``
+
+This is the dependencies for Python's package manager. There aren't any yet, so this file is empty.
 
 
-Code
-^^^^
-
-Having defined the interface into our service, we can now write the code. Your app code lives in ``app.py`` (or ``app.js`` for JS, and so on), as follows:
-
-**TODO**
-
-
-Hosting your Service
+Building your service with nstack-engine
 --------------------
 
-Now you've developed your service you can host it on your local nstack install to test it, or you can go straight ahead and deploy live to your nstack server.
+When you compile or run a service, it is run on the nstack engine (which is a Linux virtual machine). Make sure you've installed nstack as described in :ref:`getting_started_installation`. To compile it with the engine, run ``nstack build``
 
-Hosting locally
-^^^^^^^^^^^^^^^
+.. code-block:: bash
 
-**TODO**
+	$ nstack build
+	[Success] Your service is live at 1.1.1.1
 
+Once a service is live, it can be run or run in response to various event sources. To simply run our ``square`` function we can: 
 
-Hosting on nstack-cloud
-^^^^^^^^^^^^^^^^^^^
+.. code-block:: bash
 
-**TODO**
+	$ nstack run square("3")
+	[Error] Service expected 'int' but received 'string' 
 
+Oops! As we specified in our ``api.idl``, our ``square`` function should take an int and return an int. We accidentally passed a string ("3" instead of 3), so it errored. 
 
-Using your Service
-------------------
+Let's try again:
 
-Once your nstack service is live, it can react to events.
+.. code-block:: bash
 
-Events can be third-party event-sources (such as a Kafka stream or a RabbitMQ queue) or internal nstack events, such as our HTTP Gateway or Scheduler. 
+	$ nstack run square(3)
+	[Success] Service successfully ran with result `9 : Int`
 
-When an event comes in, the whole nstack infrastructure is abstracted away from your service code. From this point of view, it's as simple as executing a function call.
+Great! 
 
-Read more about using services in :ref:`using_index`
-
-Calling a service
-^^^^^^^^^^^^^^^^^
-
-**TODO**
-
-Further Information
+Next steps
 -------------------
 
-This was a simple example, but you can build anything you can in a normal server: you can even package up existing legacy infrastructure into event-driven services. See the :ref:`examples_index` to see how services have been built.
+Great! Now we're ready to add some dependencies and build something a bit more 'real-world' 
+
+:ref:`tutorial2`
+
+
 
 
 

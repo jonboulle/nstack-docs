@@ -1,46 +1,50 @@
 .. _getting_started_installation:
 
+=====================
 Platform Installation
 =====================
 
-
-****
 Introduction
-****
-nstack is comprised of two parts: your nstack machine, which lives as a virtual appliance on your local network or cloud provider, and the nstack toolkit.
+^^^^^
 
-The nstack machine is where your services are built, compiled, and executed, whilst the nstack toolkit is used to push services and administer the machine.
+nstack is comprised of two parts: 
 
-As the machine is an appliance, you can run it locally (using something like kvm or virtualbox), or it can be hosted on your cloud provider of choice. You are not limited to one machine: many users have a machine on their cloud provider for production services, and a local machine for testing or staging.
+- **nstack engine** is a virtual machine which can be hosted locally or on your cloud provider. It is where your services are deployed to, compiled, and where they run.
+- **nstack toolkit** is a local binary which controls the nstack engine. It is used to deploy microservices from your machine to your engine.
 
-***
-Installation
-***
+.. _machine_installation:
 
-..Note: All releases can be found on nstack's `release page <http://nstack.com/install>`_. 
+Engine Installation
+^^^^^^
 
-To install the machine, browse to nstack's `release page <http://nstack.com/install>`_. We have helpers to let you install it to AWS, or you can download the .iso and host it where you please. 
+To install the machine, browse to nstack's `release page <http://nstack.com/install>`_. We have helpers to let you install it to AWS, or you can download the .iso and host it elsewhere. As it is a VM, it can run on your local machine (using something like KVM or VirtualBox) 
 
- * :ref:`_aws_installation`
- * :ref:`_manual_installation`
+ * :ref:`AWS Installation <aws_installation>`
+ * :ref:`Manual Installation <manual_installation>`
 
 .. _aws_installation:
 
-***
-AWS Installation
-***
+**AWS Installation**
 
-**TODO**
+nstack provides a CloudFormation template to install nstack to AWS. 
 
-nstack provides a CloudFormation template to install to your AWS vpc. 
+.. _manual_installation:
 
-***
-Manual Installation
-***
+**Manual Installation**
 
 **TODO**
 
 nstack provides an .iso which you can host on your virtual machine of choice.
 
+.. _toolk_installation:
 
+Toolkit Installation
+^^^^^
 
+To install the nstack CLI, you will need to download it from the website. To do this:
+
+.. code-block:: bash
+
+	$ curl https://nstack.com/install/cli | sh
+
+This will take you through the install process. 
