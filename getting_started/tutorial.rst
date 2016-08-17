@@ -5,7 +5,7 @@ Tutorial #1 -- Deploying a Service
 
 This tutorial walks you through deploying a simple service on nstack; as a first example, we're using a demo service which squares a number (don't worry, we'll be adding to it in due course!)
 
-Before we begin, check you've installed nstack as described in :ref:`getting_started_installation`, and attached your toolkit to your nstack machine.
+Before we begin, check you've installed nstack as described in :ref:`getting_started_installation`, and attached your toolkit to your nstack-engine.
 
 Creating a Service
 ------------------
@@ -25,19 +25,20 @@ This already contains all the files a nstack service needs.
 
 .. code-block:: bash
 
-    [demo-python]$ ls
+    [example-service]$ ls
     api.idl  app.py  nstack.yaml requirements.txt 
-
-In the next section, we'll walk through these files:
 
 Service structure
 ^^^^^^^^^^^^^^^^^^^^
+Let's walk through these files.
+
 ``app.py``
 ^^^^^^^^^^
 
-This is a simple python class which comprises your service. As you can see, we're not doing anything particularly exciting here, but this could be as complex as you please.
+This is a simple python class which comprises our service. As you can see, we're not doing anything particularly exciting here, but this could be as complex as you please.
 
 .. code-block:: python
+
 	#!/usr/bin/env python3
 	# -*- coding: utf-8 -*-
 	import nstack	
@@ -45,7 +46,6 @@ This is a simple python class which comprises your service. As you can see, we'r
 	class ExampleService(nstack.Service):
 		def square(number):
 			return number * number
-
 
 
 ``nstack.yaml``
@@ -74,6 +74,8 @@ The ``api.idl`` is an interface-definition (IDL) file which describes our servic
 One of the features of nstack is that your inputs is type-checked. Here, we are saying we want to expose our function ``sqrt`` which takes an ``int`` and returns an ``int``.
 
 ``requirements.txt``
+^^^^^^^^
+
 
 This is the dependencies for Python's package manager. There aren't any yet, so this file is empty.
 
