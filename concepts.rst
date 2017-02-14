@@ -1,9 +1,10 @@
 Concepts
 ************
 
+.. _module:
 **Modules**
 
-Foo 
+Foo
 
 **Sources & Sinks**
 
