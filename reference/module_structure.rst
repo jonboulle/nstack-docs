@@ -1,8 +1,7 @@
 .. _creating_structure:
 
-Service Project Structure
+Module Structure
 =========================
-**TODO-mandeep**
 
 Introduction
 ------------

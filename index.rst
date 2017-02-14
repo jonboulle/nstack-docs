@@ -6,22 +6,17 @@
 nstack Documentation
 ====================================
 
-Welcome! To jump right now, check out :ref:`tutorial1` for a quick guide to using and creating a service on nstack.
-
-Please let us know at docs@nstack.com if anything is unclear or you find a mistake. Better still, submit a pull-request using the link at the top-right. 
-
 Contents:
 
 ..  toctree::
     :maxdepth: 2
 
-    introduction
-    getting_started/index
-    installing_nstack/index
-    creating_service/index
-    using_service/index
-    service_mgmt/index
+    overview
+    concepts
+    installation
+    quick_start/index
+    architecture
     examples/index
-    misc/index
+    reference/index
 
 
