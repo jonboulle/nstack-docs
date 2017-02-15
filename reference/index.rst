@@ -9,4 +9,5 @@ Reference
    nstack_toolkit
    module_structure
    workflow_language
+   supported_integrations
 
