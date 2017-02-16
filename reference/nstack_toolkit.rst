@@ -7,13 +7,7 @@ nstack CLI
 .. Introduction
 .. ------------
 
-The nstack CLI is used to create, test, deploy, and maintain your services hosted on nstack.
-It provides a range of commands used to interact with your code and the nstack servers.
-
-Getting Started
-^^^^^^^^^^^^^^^
-
-Firstly, install the CLI and requirements by following the instructions in :ref:`CLI installation <CLI_installation>`. 
+The nstack CLI is used to build modules and workflows on the NStack server.
 
 Usage
 -----
@@ -22,10 +16,8 @@ Having installed the CLI, make sure it's accessible from your path
 
 .. code:: bash
     
-    $ nstack -V
+    $ nstack --version
     > nstack 0.5.4
-
-Now that's done, you may wish to run through the tutorial at :ref:`tutorial_create`.
 
 You can find the list of commands and options available by running,
 
@@ -33,96 +25,85 @@ You can find the list of commands and options available by running,
 
     $ nstack --help
 
-.. note:: Enable verbose mode to view more debug output using ``nstack -v``.
-
 Commands
 --------
 
-In this section we'll go over the main commands supported by the Toolkit and explain their use in helping you to build, test, deploy and maintain your services locally and in the cloud.
-
-Help for any command can be displayed by running,
-
-.. code:: bash
-
-    $ nstack command --help
-
+This section explains the commands supported by the CLI toolkit.
 
 ``info``
 ^^^^^^^^
-
 .. code:: bash
 
     $ nstack info
 
-Displays information regarding the CLI version
+Displays information regarding the entire current state of NStack, including:
 
-``remote``
-^^^^^^^^^
-**TODO-mandeep**
-.. code:: bash
-
-    $ nstack remote nstack-host
-
-Set the hosted nstack server which you would like to use. 
+ - Modules 
+ - Sources 
+ - Sinks 
+ - Running processes 
+ - Base images
 
 ``init``
 ^^^^^^^^
 .. code:: bash
 
-    $ nstack init stack
+    $ nstack init <stack>
 
 ============    ===========
 Option          Description
 ============    ===========
-``stack``       The default language stack to use, e.g. python, nodejs, etc.
+``stack``       The default stack to use to build your service, e.g. python or NStack Workflow Language.
 ============    ===========
 
-Initialises a new nstack project in the current directory using the specified base language stack. This creates a working skeleton project which you can modify to rapidly build your own service. 
+Initialises a new nstack module in the current directory using the specified base language stack. This creates a working skeleton project which you can use to write your module.
 
-By default it creates a service in your stack that has a single ``add`` function already specified. The initial project is comprised of the following files,
-**TODO-mandeep**
+If you are creating a module in an existing programming language, such as Python, ``init`` creates a module with a single ``numChars`` function already created. The initial project is comprised of the following files,
 
-* ``nstack.yaml``, your service's config file  (see :ref:`creating_structure_hutfile`),
-* an ``api.idl`` Interface Definition File, which is where you choose which parts of your code you want to expose (see :ref:`creating_app_idl`),
-* an ``app.py`` application file (or app.js, etc.),
-* a ``README.md`` markdown file,
-* an empty packages file for your chosen language stack (e.g. ``requirements.txt`` for Python, or ``package.json`` for Node, etc.).
+* ``nstack.yaml``, your service's configuration file  (see :ref:`module_structure`),
+* ``service.py``, an application file (or service.js, etc.), where your business-logic lives
+* an empty packages file (e.g. ``requirements.txt`` for Python, or ``package.json`` for Node, etc.).
 
-The ``init`` command also creates a git repo and commits the files be default.
+``init`` is the command used to create a new workflow. In this case, NStack creates a skeleton ``workflow.nml`` file.
 
-``build`` [building/deploying]
+``build`` 
 ^^^^^^^^^
-**TODO-mandeep**
 
 .. code:: bash
 
-    $ nstack build [--force]
+    $ nstack build 
 
-============    ===========
-Option          Description
-============    ===========
-``--force``     Forces the build to occur even if no file changes 
-============    ===========
+Builds a module on your hosted nstack instance.  
 
-Builds the image on your hosted nstack instance. This command is usually unneeded as the ``boot`` command runs a build if needed.
+.. note:: ``build`` is also used to build workflows. Remember, workflows are modules too!
 
-``run/start`` [run/starting]
+
+``start``
 ^^^^^^^^^
-**TODO-mandeep**
-
 .. code:: bash
 
-    $ nstack run service [event-source] [entry=]
+    $ nstack start <workflow>
 
-============    ===========
+
+==============  ===========
 Option          Description
-============    ===========
-``entry=``      The function to send the event into
-============    ===========
+==============  ===========
+``<workflow>``  The workflow to start, in NStack Workflow Language
+==============  ===========
 
-Attaches your service to an event-source. When an event is recieved, your service runs. 
 
-``ps`` [listing running service+event]
+Used to start a workflow as a process. Workflows can either be provided as an argument such as:
+
+.. code:: bash
+    $ nstack start "mySource | myModule.myMethod | sink(mySink)"
+
+Or, if you have built a workflow as a module, you can start it with:
+
+.. code:: bash
+    $ nstack start myWorkflow
+
+
+``ps`` 
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
@@ -130,39 +111,78 @@ Attaches your service to an event-source. When an event is recieved, your servic
     $ nstack ps
 
 
-Shows a list of all services which are *active* on your nstack server (i.e. they are been bound to an event-source). You can think of these as 'processes'. This is distincy from ``ls``, which shows you the services which have been deployed and are available to run. 
+Shows a list of all processes, which are workflows that are running on your your nstack server.
 
-``kill`` [stop a running service+event]
+``stop`` 
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
-    $ nstack kill process
-
+    $ nstack stop <process-id>
 
 Stop a running process.
 
-``ls`` [listing available/built services]
+``list`` 
 ^^^^^^^^^^
 
 .. code:: bash
 
-    $ nstack ls
+    $ nstack list <primitive>
 
+===============    ===========
+Option             Description
+===============    ===========
+``<primitive>``    The primitive you want to list.
+===============    ===========
 
-Shows a list of all available services on your nstack server. These may or may not be running processes (i.e. attached to event-sources).
+Shows a list of available primitives. Support primitives are modules, workflows, methods, sources, and sinks.
 
-``rm`` [remove service]
+``delete`` 
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
-    $ nstack rm service
+    $ nstack delete <module>
+
+============    ===========
+Option          Description
+============    ===========
+``<module>``    The module's name.
+============    ============
+
+Deletes a module (and thus its methods) from NStack. 
 
 
-Deletes a service which from your nstack host. 
+``logs`` 
+^^^^^^^^^^^^^^^^
 
+.. code:: bash
 
-``status`` [logs/status of a service]
+    $ nstack logs <process>
 
+=============    ===========
+Option           Description
+=============    ===========
+``<process>``    The id of the process.
+=============    ===========
+    
+View the logs of a running process.
+
+``server-logs`` 
+^^^^^^^^^^^^^^^^
+
+.. code:: bash
+
+    $ nstack server-logs
+   
+View the full logs of the NStack server.
+
+``gc`` 
+^^^^^^^^^^^^^^^^
+
+.. code:: bash
+
+    $ nstack gc
+
+Expert: Garbage-collect unused images to free up space on the server.
 
