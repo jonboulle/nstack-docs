@@ -1,8 +1,8 @@
 .. _what_is_nstack: 
 
-What is NStack?
+Why NStack?
 ===============
 
-Productionise your data-driven code instantly without an engineering team or complex infrastructure.
+Productionise your data-driven code without an engineering team or complex infrastructure.
 
-Deploy any workload as safe, reusable and reliable modules. Integrate seamlessly with your data warehouse, middleware, and external systems.  Combine and compose into powerful workflows, and unleash the answers your data holds.
+Deploy workloads as safe, reusable, and reliable modules. Integrate with your existing data stores and event sources. Combine and compose powerful workflows quickly and effortlessly.
