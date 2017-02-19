@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-nstack Documentation
+NStack Documentation
 ====================================
 
-Contents:
+Welcome to the NStack Documentation!
 
 ..  toctree::
     :maxdepth: 2
@@ -16,7 +16,6 @@ Contents:
     installation
     quick_start/index
     architecture
-    examples/index
     reference/index
 
 

@@ -1,6 +1,6 @@
 .. _module:
 
-Writing your module
+Writing your Module
 =========================
 
 :ref:`NStack modules <module>` contain the methods that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
@@ -17,7 +17,7 @@ We want to create a new Python module.
 
 Create a directory called ``demo`` where you would like to build your module (NStack uses the name of the directory as the default name of the module) and ``cd`` into that directory using your terminal.
 
-To do so, type ``nstack init python`` in the terminal.
+To create a new module, run ``nstack init python``.
 You should see the following output confirming that this operation was successful.
 
 .. code:: bash
@@ -37,7 +37,7 @@ A successful ``init`` will have created some files in the directory.
  > ls
  nstack.yaml  requirements.txt  service.py  setup.py
 
-This is the skeleton of an NStack module.  Modules comprise a configuration file -- `nstack.yaml` -- and your business logic, e.g. some Python code. 
+This is the skeleton of an NStack module.  Modules comprise of a configuration file -- `nstack.yaml` -- and your business logic, e.g. some Python code. 
 
 .. When we `build` a module, NStack deploys the code to the cloud and expose the functions in your business-logic which you specified in your configuration.
 
@@ -45,9 +45,9 @@ This is the skeleton of an NStack module.  Modules comprise a configuration file
 
 
 We're going to be concerned with ``nstack.yaml`` and ``service.py``.
-(For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`)
+ For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`
 
-``service.py`` is where the business logic of your Python module lives. This is just Python as you would normally write it, with a ``Service`` class that contains methods we want to call. NStack prefills it with a sample method, ``numChars``, that counts the number of characters in some text.
+``service.py`` is where the business logic of your Python module lives. This is just Python as you would normally write it, with a ``Service`` class that contains the methods we want to call. NStack prefills it with a sample method, ``numChars``, that counts the number of characters in some text.
 
 .. code:: python
 
@@ -119,5 +119,5 @@ We can check that our ``numChars`` method is live by running the suggested ``nst
   ~/demo> nstack list methods
   demo.numChars : Text -> Integer
 
-Now that our method is live on NStack, we can attach it to a event *source* and an event *sink* using NStack's Workflow Language. 
+Now that our ``numChars`` method is live on NStack, we can attach it to a event *source* and an event *sink* using NStack's Workflow Language. 
 
