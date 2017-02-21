@@ -3,9 +3,9 @@
 Writing your Module
 =========================
 
-:ref:`NStack modules <module>` contain the methods that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
+NStack Modules contain the methods that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
 
-After this tutorial, we will have a simple live Python module deployed to our NStack instance which can be hooked up to event and data-sources. 
+After this tutorial, we will have a simple live Python module deployed to our NStack instance, where it can be hooked up to event and data-sources. 
 
 .. note:: Before starting, check that NStack is installed by running ``nstack --version`` in your terminal. If you got information about the version of NStack you have, you're good to go. If that didn't work, check out :doc:`Installation </installation>` again.
 
@@ -27,9 +27,6 @@ You should see the following output confirming that this operation was successfu
   ~/demo> nstack init python
   python module 'demo' successfully initialised at ~/demo
 
-
-(If not, and you can't figure out why, :doc:`see troubleshooting </troubleshooting>`).
-
 A successful ``init`` will have created some files in the directory.
 
 .. code:: bash
@@ -37,17 +34,11 @@ A successful ``init`` will have created some files in the directory.
  > ls
  nstack.yaml  requirements.txt  service.py  setup.py
 
-This is the skeleton of an NStack module.  Modules comprise of a configuration file -- `nstack.yaml` -- and your business logic, e.g. some Python code. 
+This is the skeleton of an NStack module.  Modules comprise of a configuration file -- `nstack.yaml` -- and your business logic, which in this example is some Python code. 
 
-.. When we `build` a module, NStack deploys the code to the cloud and expose the functions in your business-logic which you specified in your configuration.
+We're going to be concerned with ``nstack.yaml`` and ``service.py``. For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`
 
-.. ``ls`` shows us:
-
-
-We're going to be concerned with ``nstack.yaml`` and ``service.py``.
- For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`
-
-``service.py`` is where the business logic of your Python module lives. This is just Python as you would normally write it, with a ``Service`` class that contains the methods we want to call. NStack prefills it with a sample method, ``numChars``, that counts the number of characters in some text.
+``service.py`` is where the business logic of your Python module lives. This is just Python as you would normally write it, with a ``Service`` class that contains the methods we want to use on NStack. NStack prefills it with a sample method, ``numChars``, that counts the number of characters in some text.
 
 .. code:: python
 
@@ -63,7 +54,7 @@ We're going to be concerned with ``nstack.yaml`` and ``service.py``.
           return len(x)
 
 
-``nstack.yaml`` is where the configuration for this module lives. NStack fills in the service, stack, and parent for you, so we don't need to worry about them for now.
+``nstack.yaml`` is where the configuration for this module lives. NStack fills in the ``service``, ``stack``, and ``parent`` for you, so we don't need to worry about them for now.
 
 .. code:: yaml
 
@@ -81,26 +72,18 @@ We're going to be concerned with ``nstack.yaml`` and ``service.py``.
       numChars : Text -> Integer
     }
 
-  # (Optional) System-level packages needed
-  packages: []
+We're going to focus on the ``api`` section, where you tell NStack which of the methods in your ``service.py`` you want to turn into methods on NStack,
+and their input and output schemas (also known as types).
 
-  # (Optional) Commands to run when building the service (Bash-compatible)
-  commands: []
+.. note:: The schema -- or type -- system is a key feature of NStack that lets you define the sort of data your method can take as input, and produce as output. This helps you ensure that your module can be reused and works as intended in production.
 
-  # (Optional) Files/Dir to copy across into the service (can use regex/glob syntax)
-  files: []
+In this instance, we want to expose one method, ``numChars``, which takes ``Text`` and returns an ``Integer``.
 
-We're going to focus on the `api` section, where you tell NStack which of the methods in your `service.py` you want to expose,
-and the input and output schemas (also known as types) of these methods.
-In this instance, we want to expose one method,
-``numChars``, which takes ``Text`` and returns an ``Integer``. 
-
-.. note:: NStack's schema -- or type -- system lets you define the sort of data your function can take as input, and produce as output, which helps you ensure that your module can be reused and works as intended in production.
 
 Step 2: ``build``
 -------------
 
-To build and deploy our module on NStack, we use the ``build`` command. 
+To build and publish our module on NStack, we use the ``build`` command. 
 
 .. code:: bash
 
@@ -119,5 +102,5 @@ We can check that our ``numChars`` method is live by running the suggested ``nst
   ~/demo> nstack list methods
   demo.numChars : Text -> Integer
 
-Now that our ``numChars`` method is live on NStack, we can attach it to a event *source* and an event *sink* using NStack's Workflow Language. 
+Now that our ``numChars`` method is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to a event *source* and an event *sink* using NStack's Workflow Language. 
 
