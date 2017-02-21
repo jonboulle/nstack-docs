@@ -1,26 +1,27 @@
 Installation & Upgrading
-************
+************************
 
 .. _installation:
 
 Installation
-===========
+=============
 
-NStack can run out of the box, either on:
+NStack is platform-agnostic and can run out-of-the-box wherever you can run a virtual machine, including:
+
  - your cloud provider of choice
  - your internal cloud
  - locally using VirtualBox, VMWare, or your operating system's native virtualisation 
 
-For Proof of Concepts, NStack offers a hosted solution. If this is required, please `get in touch <help@nstack.com>`_.
+For Proof of Concepts, NStack offers a hosted solution. If this is required, please reach out to info@nstack.com.
 
-.. note:: For more information on NStack's architecture, see :ref:`Architectural Overview<_architecture>` 
+The virtual appliance can be found on the NStack's `GitHub Releases page <http://github.com/nstackcom/nstack-releases/releases>`_, where is is provided as a ``raw`` or ``qcow2`` image. We also provide an AWS AMI, which can be found under the id of ``ami-53a47245``
 
-The virtual appliance can be found on the NStack's `GitHub Releases page <http://github.com/nstackcom/nstack-releases/releases>`_, where is is provided as a ``raw`` or ``qcow2`` image. 
+To launch this AMI to an EC2 instance on your AWS account, you can `click here <https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LaunchInstanceWizard:ami=ami-53a47245>`_. 
 
-The `NStack Server` is configured using ``cloud-init``, which is supported by major cloud providers. 
+The `NStack Server` is configured using ``cloud-init``, which is supported by major cloud providers, so it will work out of the box with your credentials. Please note that the first time you boot NStack it may take a few minutes to initialise. 
 
 Upgrading
-========
+==========
 
 The `NStack Server` can be update atomically using `rpm-ostree`. To upgrade to a new release, you can simply run:
 
