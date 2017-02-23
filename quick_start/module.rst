@@ -5,7 +5,7 @@ Writing your Module
 
 NStack Modules contain the methods that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
 
-After this tutorial, we will have a simple live Python module deployed to our NStack instance, where it can be hooked up to event and data-sources. 
+After this tutorial, we will have a simple Python module deployed to our NStack instance, where it can be hooked up to event and data-sources. This module has a single method in it which simply counts the number of characters in some text. 
 
 .. note:: Before starting, check that NStack is installed by running ``nstack --version`` in your terminal. If you got information about the version of NStack you have, you're good to go. If that didn't work, check out :doc:`Installation </installation>` again.
 
@@ -34,11 +34,11 @@ A successful ``init`` will have created some files in the directory.
  > ls
  nstack.yaml  requirements.txt  service.py  setup.py
 
-This is the skeleton of an NStack module.  Modules comprise of a configuration file -- `nstack.yaml` -- and your business logic, which in this example is some Python code. 
+This is the skeleton of an NStack module. ``nstack.yaml`` is the configuration file for your module, and ``service.py`` is where the code of your module lives (in this case, it's a Python class). ``requirements.txt`` and ``setup.py`` are both standard files for configuring Python. 
 
 We're going to be concerned with ``nstack.yaml`` and ``service.py``. For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`
 
-``service.py`` is where the business logic of your Python module lives. This is just Python as you would normally write it, with a ``Service`` class that contains the methods we want to use on NStack. NStack prefills it with a sample method, ``numChars``, that counts the number of characters in some text.
+In ``service.py``, there is a ``Service`` class. This is where we would write the methods we want to use on NStack. It is prefilled it with a sample method, ``numChars``, that counts the number of characters in some text.
 
 .. code:: python
 
@@ -93,7 +93,7 @@ To build and publish our module on NStack, we use the ``build`` command.
 
 When we run this, the code in the directory is packaged up and sent to the server, where NStack transforms it into a module.
 
-.. note:: Learn more about how NStack packages and runs your module using containers in the :ref:`Architecture<_architecture>` section.
+.. note:: Learn more about how NStack packages and runs your module using containers in the :ref:`Architecture <architecture>` section.
 
 We can check that our ``numChars`` method is live by running the suggested ``nstack list methods`` command:
 
