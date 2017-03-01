@@ -22,3 +22,8 @@ Example sources and sinks are databases, files, message-queues, and HTTP endpoin
 **Workflows**
 
 Modules, sources, and sinks can be combined together to build *workflows*. This is accomplished using the *NStack Workflow Language*, a simple, high-level language for connecting things together on the *NStack Platform*.
+
+**Processes**
+
+When a workflow is started, it becomes a running `process`. You can have multiple processes of the same workflow.
+
