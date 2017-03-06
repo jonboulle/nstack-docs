@@ -15,6 +15,7 @@ NStack is composed of a local CLI toolkit (client) which runs on a user's machin
 
 Alternatively, NStack can provide an `.rpm` that can run on your own RHEL-based server. If this is a requirement, please contact us for instructions.
 
+
 Technologies
 **********
 
@@ -28,3 +29,11 @@ NStack is built using best-of-class technologies, such as:
  - btrfs 
  - sytemd-nspawn
  - d-bus  
+
+
+Diagrams
+********
+
+.. image:: arch.png
+
+.. image:: arch2.png
