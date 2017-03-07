@@ -27,7 +27,8 @@ Field Name        Description              Type
 
 If we are trying to find the species based on the sepal and petal measurements, this means these measurements are going to be the input to our classifier module, with text being the output. This means we need to write a method in Python which takes four ``Double``\s and returns ``Text``.
 
-## Creating your module
+Creating your module
+*******************
 
 To begin, let's make a new directory called ``irisclassify``, ``cd`` into it, and initialise a new module:
 
@@ -143,7 +144,7 @@ Our classifier is now published, but to use it we need to connect it to an event
 
 .. code :: bash
    
-    ~/irisclassify/ $ nstack start "source(http:///irisendpoint : (Double, Double, Double, Double)) | irisclassify.predict | sink(log:// : Text)"
+    ~/irisclassify/ $ nstack start "sources.http : (Double, Double, Double, Double) { http_path : "/irisendpoint" } | irisclassify.predict | sinks.log : Text"
 
 This creates an HTTP endpoint on ``http://localhost:8080/irisendpoint`` which can receive four ``Double``\s, and writes the results to the log as ``Text``. We can test our classifier by sending it some of the sample data from ``train.csv``:
 
@@ -178,7 +179,7 @@ So far, we've composed workflows out of a source, a sink, and a single method, b
 
 .. code :: bash
    
-    ~/irisclassify/ $ nstack start "source(http:///irisendpoint : (Double, Double, Double, Double)) | irisclassify.predict | demo.numChars | sink(log:// : Integer)"
+    ~/irisclassify/ $ nstack start "sources.http (Double, Double, Double, Double) { http_path = "/irisendpoint" } | irisclassify.predict | demo.numChars | sink : Integer"
 
 Although you can write workflows directly in the ``start`` command, as we have above, NStack provides a more powerful way to build workflows that allows them to be re-used, shared, and composed together. 
 All of the workflows that are started with the ``start`` command have to be `fully composed`, which means that they contain a source, one or more modules, and a sink. Many times, you may want to write a workflow which is only `partially composed`; for instance, it contains only modules, is a combination of a source and a module, or is a combination of a module and a sink. These workflows cannot be run by themselves, but can be shared and attached to other sources, sinks, or modules when they are started.
@@ -203,7 +204,7 @@ Instead of creating an ``nstack.yaml``, this creates a single file, ``workflow.n
   
   module irisworkflow {
     // A sample workflow
-    def w = source(http:///s : Text) | Module1.numChars | sink(log:// : Integer)
+    def w = sources.http : Text { http_path = "/s" } | Module1.numChars | sinks.log : Integer
   }
 
 You will notice that the module itself is named ``irisworkflow`` after the directory name, and has an example workflow in it, ``w``. We're going to replace this with our ``speciesLength`` workflow above.
@@ -236,14 +237,14 @@ Note that the input type of the workflow is the input type of ``irisclassify.pre
 
 .. code :: bash
 
-  ~/irisworkflow/ $ nstack start "source(http:///speciesLength : (Double, Double, Double, Double)) | irisworkflow.speciesLength | sink(log:// : Integer)"
+  ~/irisworkflow/ $ nstack start 'src.http : (Double, Double, Double, Double) { http_path = "speciesLength" } | irisworkflow.speciesLength | sink.log : Integer'
 
 Alternatively, you can move the source and sink into the ``workflow.nml`` file:
 
 .. code :: java
 
   module irisworkflow {
-    def completeWorkflow = source(http:///speciesLength : (Double, Double, Double, Double)) | irisworkflow.speciesLength | sink(log:// : Integer)
+    def completeWorkflow = src.http : (Double, Double, Double, Double) { http_path = "speciesLength" } | irisworkflow.speciesLength | sink.log : Integer;
   }
 
 If you ``build`` this, you can then start it by itself with the ``start`` command, because it's a fully composed:
@@ -257,7 +258,7 @@ This paradigm can be helpful when we apply it to sources and sinks. Oftentimes, 
 .. code :: java
   
   module customerRecords {
-    def cleanSource = source(postgresql://foo:bar@database.contoso.com/customers?query=SELECT * FROM customer_records : CustomerRecord) | DataTools.cleanCustomerRecord; 
+    def cleanSource = source.postgres { postgres_username = "foo, postgres_password = "bar" @database.contoso.com/customers?query=SELECT * FROM customer_records : CustomerRecord) | DataTools.cleanCustomerRecord; 
     def cleanSink = DataTools.ensureValidCustomer | sink(postgresql://foo:bar@database.contoso.com/customers?table=customer_records : CustomerRecord);
   }
 
