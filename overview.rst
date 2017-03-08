@@ -3,4 +3,6 @@
 Why NStack?
 ===============
 
-Productionise data-driven code without an engineering team or complex infrastructure. Deploy workloads as reusable, reliable modules and effortlessly compose workflows to integrate them with your existing data stores and event sources. 
+- Productionise your models and data integration code to the cloud as reusable functions that can be monitored, versioned, shared, and updated
+- Effortlessly compose workflows to integrate your functions with your data and event sources, without dealing with any infrastructure
+- NStack containerises and orchestrates your workflows on your cloud provider and makes sure they always work 
