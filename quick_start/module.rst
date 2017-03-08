@@ -22,10 +22,10 @@ You should see the following output confirming that this operation was successfu
 
 .. code:: bash
 
-  ~> mkdir demo
-  ~> cd demo
-  ~/demo> nstack init python
-  python module 'demo' successfully initialised at ~/demo
+  ~> mkdir Demo
+  ~> cd Demo
+  ~/Demo> nstack init python
+  python module 'Demo:0.0.1' successfully initialised at ~/Demo
 
 A successful ``init`` will have created some files in the directory.
 
@@ -59,13 +59,13 @@ In ``service.py``, there is a ``Service`` class. This is where we would write th
 .. code:: yaml
 
   # Service name (a combination of lower case letters, numbers, and dashes)
-  name: demo
+  name: Demo:0.0.1
 
   # The language stack to use
   stack: python
 
   # Parent Image
-  parent: com.nstack.python:24.0
+  parent: NStack.Python:0.24.0
 
   api: |
     interface Default {
@@ -99,8 +99,19 @@ We can check that our ``numChars`` method is live by running the suggested ``nst
 
 .. code:: bash
 
-  ~/demo> nstack list methods
-  demo.numChars : Text -> Integer
+  ~/Demo> nstack list methods
+  Demo.numChars : Text -> Integer
 
 Now that our ``numChars`` method is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to a event *source* and an event *sink* using NStack's Workflow Language. 
+
+Advanced: Framework Modules
+---------------------------
+
+You may want to create a common parent module that has lots of complex dependencies already installed, either to save time or for standardisation. NStack supports this with _Framework Modules_. Simply create a new module similar to above, `nstack init framework [parent]`, and modify the resulting `nstack.yaml` as needed.
+
+You can then build this module using `nstack build`, and refer to it within your future services within the `parent` field of their `nstack.yaml` config file.
+
+
+
+
 

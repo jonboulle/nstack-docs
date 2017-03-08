@@ -22,14 +22,14 @@ Sample ``nstack.yaml`` file:
 
 .. code-block:: yaml
 
-    # Module name (a combination of lower case letters, numbers, and dashes)
-    name: my-module
+    # Module name
+    name: MyModule
 
     # The language stack to use
     stack: python
 
     # Parent Image
-    parent: com.nstack.python:24.0
+    parent: NStack.Python:0.24.0
 
     api: |
     interface Default {

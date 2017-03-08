@@ -95,12 +95,16 @@ Option          Description
 Used to start a workflow as a process. Workflows can either be provided as an argument such as:
 
 .. code:: bash
-    $ nstack start "mySource | myModule.myMethod | sink(mySink)"
+    $ nstack start
+    > import MySource:0.0.1 as MySource;
+    > import MySink:0.0.1 as MySink;
+    > import MyModule:0.0.1 as MyModule;
+    > MySource.src | MyModule.myMethod | MySink.snk
 
 Or, if you have built a workflow as a module, you can start it with:
 
 .. code:: bash
-    $ nstack start myWorkflow
+    $ nstack start "Import MyWorkflow:0.0.1 as W; W.myWorkflow"
 
 
 ``ps`` 
