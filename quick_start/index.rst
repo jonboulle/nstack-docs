@@ -17,3 +17,4 @@ Make sure you have :doc:`installed NStack </installation>` and let's get going.
    module
    workflow
    more
+   workflow_power
