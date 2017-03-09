@@ -1,7 +1,9 @@
 .. _workflow_power: 
 
-Example Part #2 : More Powerful Workflows
+Example Part #2: More Powerful Workflows
 *****************************************
+
+Now that we have published our iris classifier to NStack as a module, we can use it to demonstrate some of the more powerful features of the workflow engine.
 
 Workflows as modules
 ====================
@@ -39,7 +41,6 @@ NStack creates a single file, ``workflow.nml``, which contains a sample workflow
 
 In this sample, we have a module called ``irisworkflow`` which has a single workflow on it, ``w``. If we replace ``Module.numChars`` with the function from our previous tutorial, ``demo.numChars``, we can then build this workflow with ``nstack build``.
 
-As with other modules, we can now build ``irisworkflow`` with the ``build`` command:
 
 .. code :: bash
  
@@ -53,26 +54,32 @@ And now start this directly with the start command:
 
   ~/irisworkflow/ $ nstack start irisworkflow.w
 
-Multiple Steps
+Multiple steps
 ==============
 
-Workflows can contain as many steps as you like, as long as the output type of one matches the input type of the other. For instance, let's add our ``demo.numChars`` method from the previous tutorial to our workflow. From listing the available methods above, we see that it takes ``Text`` and returns ``Integer``. Because our ``irisclassify.predict`` method returns ``Text``, this means we can connect -- or `compose` -- them together.
+Workflows can contain as many steps as you like, as long as the output type of one matches the input type of the other. For instance, let's say we wanted to create the following workflow:
 
-.. note :: ``numChars`` and ``predict`` can be `composed` together because their types -- or schemas -- match. If ``predict`` wasn't configured to output ``Text``, or ``numChars`` wasn't configured to take ``Text`` as input, NStack would not let you build the following workflow.
+- Expose an HTTP endpoint which takes four ``Double``\s
+- Send these ``Double``\s to our classifier, ``irisclassify``, which will tell us the species of the iris
+- Count the number of characters in the species of the iris
+- Write the result to the log
+
+We could write the following workflow:
 
 .. code :: bash
    
   module irsiworkflow {
-    def multipleSteps = sources.http (Double, Double, Double, Double) { http_path = "/irisendpoint" } | irisclassify.predict | demo.numChars | sink : Integer;
+    def multipleSteps = sources.http (Double, Double, Double, Double) { http_path = "/irisendpoint" } | irisclassify.predict | demo.numChars | sinks.log : Integer;
   }
 
+.. note :: ``numChars`` and ``predict`` can be `composed` together because their types -- or schemas -- match. If ``predict`` wasn't configured to output ``Text``, or ``numChars`` wasn't configured to take ``Text`` as input, NStack would not let you build the following workflow.
 
-Partial Workflows
+Partial workflows
 ================
 
-All of the workflows that we have written so far have been `fully composed`, which means that they contain a source, one or more functions, and a sink. Many times, you may want to split up source, sinks, and functions into separate pieces you can share and reuse. In this case, we say that a workflow is `partially composed`, which just means it does not contain a source, one or more functions, and a sink. These workflows cannot be ``start``\ed by themselves, but can be shared and attached to other sources, sinks, or functions to become `fully composed`. 
+All of the workflows that we have written so far have been `fully composed`, which means that they contain a source, one or more functions, and a sink. Many times, you want to split up sources, sinks, and functions into separate pieces you can share and reuse. In this case, we say that a workflow is `partially composed`, which just means it does not contain a source, one or more functions, and a sink. These workflows cannot be ``start``\ed by themselves, but can be shared and attached to other sources, sinks, or functions to become `fully composed`. 
 
-For instance, we could combine ``irisclassify.predict`` and ``demo.numChars`` from the previous tutorials to form a new workflow ``speciesLength`` like so:
+For instance, we could combine ``irisclassify.predict`` and ``demo.numChars`` from the previous example to form a new workflow ``speciesLength`` like so:
 
 .. code :: java
   
@@ -81,7 +88,7 @@ For instance, we could combine ``irisclassify.predict`` and ``demo.numChars`` fr
     def speciesLength = irisclassify.predict | demo.numChars
   } 
 
-Because our workflow ``irisworkflow.speciesLength`` has not been connected to a source or a sink, is is technically a function. This means we can see it in alongside our other functions:
+Because our workflow ``irisworkflow.speciesLength`` has not been connected to a source or a sink, is is technically a function. If we build this workflow, we can see ``speciesLength`` alongside our other functions by using the ``list`` command:
 
 .. code :: bash
   
@@ -90,7 +97,7 @@ Because our workflow ``irisworkflow.speciesLength`` has not been connected to a 
   demo.numChars : Text -> Integer
   irisworkflow.speciesLength : (Double, Double, Double, Double) -> Integer
 
-Note that the input type of the workflow is the input type of ``irisclassify.predict``, and the output type is the output type of ``demo.numChars``. Like other functions, this must be connected to a source and a sink to make it `fully composed` so it can be started:
+As we would expect, the input type of the workflow is the input type of ``irisclassify.predict``, and the output type is the output type of ``demo.numChars``. Like other functions, this must be connected to a source and a sink to make it `fully composed` -- and thus something that can be started with the ``start`` command:
 
 .. code :: bash
 
@@ -105,9 +112,6 @@ Often times you want to re-use a source or a sink without reconfiguring them. To
     def logSink = sinks.log : Text;
     def speciesWf = httpEndpoint | irisclassify.predict | logSink;
   }
-
-Using a database as a source
-***************************
 
 Separating sources and sinks becomes useful when you're connecting to more complex middleware which you don't want to configure each time you use it -- many times you want to reuse a source or sink in multiple workflows. So far we have used HTTP as a source, and the log as a sink, but NStack supports many other integrations. 
 
@@ -124,8 +128,6 @@ Separating sources and sinks becomes useful when you're connecting to more compl
       pg_table = "iris"
     };
   }   
-
-.. note :: See all available integrations at :ref:`Supported Integrations <supported_integrations>`
 
 If we built, this module, ``irisDatabases.petalsAndSepals`` and ``irisDatbases.irisSpecies`` could be used other modules as sources and sinks.
 

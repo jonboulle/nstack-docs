@@ -121,7 +121,7 @@ Additionally, we want to tell NStack to copy our ``train.csv`` file into our mod
     files: ['train.csv']
 
 
-Publishing and Starting
+Publishing and starting
 ***********************
 
 Now we're ready to build and publish our classifier. Remember, even though we run this command locally, our module gets built and published to your NStack Server.
