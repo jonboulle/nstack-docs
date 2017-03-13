@@ -7,7 +7,7 @@ In the previous tutorial, we built and published a Python module using NStack.
 This module had a single method on it, ``numChars``, which counted the number of characters in some text. Although it has been published, we cannot talk to it until we connect it to a `source` and a `sink`.
 In this tutorial, we're going to do this, and we'll be using an HTTP endpoint as a `source`, and NStack's built-in log as a `sink`. When we're finished, we will be able to send some text to an HTTP endpoint, and see the length of the text in our log. 
 
-.. note:: Sources generate data which gets sent to your method, and sinks receive the data which your method outputs. Learn more in :ref:`Concepts <concepts>.`
+.. note:: Sources generate data which gets sent to your method, and sinks receive the data which your method outputs. Learn more in :ref:`Concepts<concepts>`
 
 Let's first refresh ourselves on what the input and output types of our method were by asking NStack:
 

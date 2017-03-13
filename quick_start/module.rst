@@ -36,9 +36,9 @@ A successful ``init`` will have created some files in the directory.
 
 This is the skeleton of an NStack module. ``nstack.yaml`` is the configuration file for your module, and ``service.py`` is where the code of your module lives (in this case, it's a Python class). ``requirements.txt`` and ``setup.py`` are both standard files for configuring Python. 
 
-We're going to be concerned with ``nstack.yaml`` and ``service.py``. For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`
+We're going to be concerned with ``nstack.yaml`` and ``service.py``. For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`.
 
-In ``service.py``, there is a ``Service`` class. This is where we would write the methods we want to use on NStack. It is prefilled it with a sample method, ``numChars``, that counts the number of characters in some text.
+In ``service.py``, there is a ``Service`` class. This is where we would write the methods we want to use on NStack. It is pre-populated with a sample method, ``numChars``, that counts the number of characters in some text.
 
 .. code:: python
 
@@ -102,5 +102,5 @@ We can check that our ``numChars`` method is live by running the suggested ``nst
   ~/demo> nstack list methods
   demo.numChars : Text -> Integer
 
-Now that our ``numChars`` method is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to a event *source* and an event *sink* using NStack's Workflow Language. 
+Now that our ``numChars`` method is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to an event *source* and an event *sink* using NStack's Workflow Language. 
 
