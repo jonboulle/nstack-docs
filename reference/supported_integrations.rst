@@ -3,7 +3,7 @@
 Supported Integrations
 ======================
 
-NStack is built to integrate with existing infrastructure, event, and data-Sources. Typically, this is by using them as *sources* and *sinks* in the NStack Workflow Language.
+NStack is built to integrate with existing infrastructure, event, and data-sources. Typically, this is by using them as *sources* and *sinks* in the NStack Workflow Language.
 
 .. seealso:: Learn more about *sources* and *sinks* in :ref:`Concepts<concepts>` 
 

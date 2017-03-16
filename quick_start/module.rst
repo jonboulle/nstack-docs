@@ -109,7 +109,7 @@ Advanced: Framework Modules
 
 You may want to create a common parent module that has lots of complex dependencies already installed, either to save time or for standardisation. NStack supports this with _Framework Modules_. Simply create a new module similar to above, `nstack init framework [parent]`, and modify the resulting `nstack.yaml` as needed.
 
-You can then build this module using `nstack build`, and refer to it within your future services within the `parent` field of their `nstack.yaml` config file.
+You can then build this module using `nstack build`, and refer to it within your future modules within the `parent` field of their `nstack.yaml` config file.
 
 
 

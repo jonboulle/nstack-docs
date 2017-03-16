@@ -46,7 +46,7 @@ Part                                             Description
 ``Sinks.log : Integer``                          Use NStack's log as a sink. The ``Integer`` statement means it can only accept Integers.
 ===============================================  ===========
 
-To start this workflow with NStack, we use NStack's ``start`` command, this opens a command prompt where you can type a snippet and press Ctrl+D to submit it (you can also redirect a file):
+To start this workflow with NStack, we use NStack's ``start`` command. This opens a command prompt where you can type a snippet and press Ctrl+D to submit it. Alternatively, you can pipe this in from a file.
 
 .. code:: bash
 
