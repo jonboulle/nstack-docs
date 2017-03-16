@@ -3,14 +3,14 @@
 Supported Integrations
 ======================
 
-NStack is built to integrate with existing infrastructure, event, and data-sources. Typically, this is by using them as *sources* and *sinks* in the NStack Workflow Language.
+NStack is built to integrate with existing infrastructure, event, and data-Sources. Typically, this is by using them as *sources* and *sinks* in the NStack Workflow Language.
 
 .. seealso:: Learn more about *sources* and *sinks* in :ref:`Concepts<concepts>` 
 
 **Sources**
  - Postgres ::
 
-    sources.postgres : Text {
+    Sources.postgres : Text {
       pg_host = "localhost", pg_port = "5432",
       pg_user = "user", pg_password = "123456",
       pg_database = "db", pg_query = "SELECT * FROM tbl;" }
@@ -20,11 +20,11 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - HTTP ::
 
-    sources.http : Text { http_path = "/foo" }
+    Sources.http : Text { http_path = "/foo" }
 
  - RabbitMQ (AMQP) ::
 
-    sources.amqp : Text {
+    Sources.amqp : Text {
       amqp_host = "localhost", amqp_port = "5672",
       amqp_vhost = "/", amqp_exchange = "ex",
       amqp_key = "key"
@@ -36,7 +36,7 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 **Sinks**
  - Postgres ::
 
-    sinks.postgres : Text {
+    Sinks.postgres : Text {
       pg_host = "localhost", pg_port = "5432",
       pg_user = "user", pg_password = "123456",
       pg_database = "db", pg_table = "tbl" }
@@ -47,13 +47,13 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - NStack Log ::
 
-    sinks.log : Text
+    Sinks.log : Text
 
    The Log sink takes no parameters.
 
  - RabbitMQ (AMQP) ::
 
-    sinks.amqp : Text {
+    Sinks.amqp : Text {
       amqp_host = "localhost", amqp_port = "5672",
       amqp_vhost = "/", amqp_exchange = "ex",
       amqp_key = "key"
@@ -65,7 +65,7 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - Firebase ::
 
-    sinks.firebase {
+    Sinks.firebase {
       firebase_host = "localhost",
       firebase_port = "111",
       firebase_path = "..."
