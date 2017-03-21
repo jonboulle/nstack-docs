@@ -19,7 +19,7 @@ Having installed the CLI, make sure it's accessible from your path
     $ nstack --version
     > nstack 0.5.4
 
-You can find the list of commands and options available by running,
+You can find the list of commands and options available by running
 
 .. code:: bash
 
@@ -154,7 +154,7 @@ Option          Description
 ``<module>``    The module's name.
 ============    ============
 
-Deletes a module (and thus its methods) from NStack. 
+Deletes a module (and thus its methods) from NStack.
 
 
 ``logs`` 
