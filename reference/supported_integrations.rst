@@ -10,7 +10,7 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 **Sources**
  - Postgres ::
 
-    Sources.postgres : Text {
+    Sources.postgres<Text> {
       pg_host = "localhost", pg_port = "5432",
       pg_user = "user", pg_password = "123456",
       pg_database = "db", pg_query = "SELECT * FROM tbl;" }
@@ -20,11 +20,11 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - HTTP ::
 
-    Sources.http : Text { http_path = "/foo" }
+    Sources.http<Text> { http_path = "/foo" }
 
  - RabbitMQ (AMQP) ::
 
-    Sources.amqp : Text {
+    Sources.amqp<Text> {
       amqp_host = "localhost", amqp_port = "5672",
       amqp_vhost = "/", amqp_exchange = "ex",
       amqp_key = "key"
@@ -36,7 +36,7 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 **Sinks**
  - Postgres ::
 
-    Sinks.postgres : Text {
+    Sinks.postgres<Text> {
       pg_host = "localhost", pg_port = "5432",
       pg_user = "user", pg_password = "123456",
       pg_database = "db", pg_table = "tbl" }
@@ -47,13 +47,13 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - NStack Log ::
 
-    Sinks.log : Text
+    Sinks.log<Text>
 
    The Log sink takes no parameters.
 
  - RabbitMQ (AMQP) ::
 
-    Sinks.amqp : Text {
+    Sinks.amqp<Text> {
       amqp_host = "localhost", amqp_port = "5672",
       amqp_vhost = "/", amqp_exchange = "ex",
       amqp_key = "key"
@@ -65,7 +65,7 @@ NStack is built to integrate with existing infrastructure, event, and data-sourc
 
  - Firebase ::
 
-    Sinks.firebase {
+    Sinks.firebase<Text> {
       firebase_host = "localhost",
       firebase_port = "111",
       firebase_path = "..."

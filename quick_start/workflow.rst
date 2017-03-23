@@ -29,7 +29,7 @@ In full, our workflow is going to look like this:
 
 .. code:: bash
   import Demo:0.0.1 as Demo;
-  Sources.http : Text { http_path = "/demo" } | Demo.numChars | Sinks.log : Integer
+  Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer>
 
 
 NStack uses the ``|`` operator to connect statements together, just like in a shell such as ``bash``. We use it to connect together the parts to form our workflow.
@@ -39,11 +39,11 @@ Let's break these parts to see what we're doing:
 ===============================================  ===========
 Part                                             Description
 ===============================================  ===========
-``Sources.http : Text { http_path = "/demo" }``  Use ``http`` as a source, which creates an endpoint on ``/demo``. The ``Text`` statement means it can only accept and pass on Text.
+``Sources.http<Text> { http_path = "/demo" }``   Use ``http`` as a source, which creates an endpoint on ``/demo``. The ``<Text>`` statement means it can only accept and pass on Text.
 
 ``Demo.numChars``                                The name of the method which we built.
 
-``Sinks.log : Integer``                          Use NStack's log as a sink. The ``Integer`` statement means it can only accept Integers.
+``Sinks.log<Integer>``                           Use NStack's log as a sink. The ``<Integer>`` statement means it can only accept Integers.
 ===============================================  ===========
 
 To start this workflow with NStack, we use NStack's ``start`` command. This opens a command prompt where you can type a snippet and press Ctrl+D to submit it. Alternatively, you can pipe this in from a file.
@@ -52,9 +52,9 @@ To start this workflow with NStack, we use NStack's ``start`` command. This open
 
  > nstack start 
  import Demo:0.0.1 as Demo;
- 'Sources.http : Text { http_path = "/demo" } | Demo.numChars | Sinks.log : Integer'
+ Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer>
  [Ctrl + D]
- Started Sources.http : Text { http_path = "/demo" } | Demo.numChars | Sinks.log : Integer as process 1
+ Started Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer> as process 1
 
 We now have a live HTTP endpoint on ``localhost:8080/demo``, running as process ``1`` on NStack. The HTTP endpoint is configured to accept JSON-encoded values. We defined it to use an input schema of ``Text``, so we will be able to send it any JSON ``string``. In our JSON, we put ``params`` as the key, and our input as the value:
 
