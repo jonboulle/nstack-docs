@@ -3,9 +3,9 @@
 Writing your Module
 =========================
 
-NStack Modules contain the methods that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
+NStack Modules contain the functions that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.
 
-After this tutorial, we will have a simple Python module deployed to our NStack instance, where it can be hooked up to event and data-sources. This module has a single method in it which simply counts the number of characters in some text. 
+After this tutorial, we will have a simple Python module deployed to our NStack instance, where it can be hooked up to event and data-sources. This module has a single function in it which simply counts the number of characters in some text. 
 
 .. note:: Before starting, check that NStack is installed by running ``nstack --version`` in your terminal. If you got information about the version of NStack you have, you're good to go. If that didn't work, check out :doc:`Installation </installation>` again.
 
@@ -38,7 +38,7 @@ This is the skeleton of an NStack module. ``nstack.yaml`` is the configuration f
 
 We're going to be concerned with ``nstack.yaml`` and ``service.py``. For a more in-depth look at all these files, refer to :doc:`Module Structure </reference/module_structure>`.
 
-In ``service.py``, there is a ``Service`` class. This is where we would write the methods we want to use on NStack. It is pre-populated with a sample method, ``numChars``, that counts the number of characters in some text.
+In ``service.py``, there is a ``Service`` class. This is where we would write the functions we want to use on NStack. It is pre-populated with a sample function, ``numChars``, that counts the number of characters in some text.
 
 .. code:: python
 
@@ -70,12 +70,12 @@ In ``service.py``, there is a ``Service`` class. This is where we would write th
   api: |
     numChars : Text -> Integer
 
-We're going to focus on the ``api`` section, where you tell NStack which of the methods in your ``service.py`` you want to turn into methods on NStack,
+We're going to focus on the ``api`` section, where you tell NStack which of the functions in your ``service.py`` you want to turn into functions on NStack,
 and their input and output schemas (also known as types).
 
-.. note:: The schema -- or type -- system is a key feature of NStack that lets you define the sort of data your method can take as input, and produce as output. This helps you ensure that your module can be reused and works as intended in production.
+.. note:: The schema -- or type -- system is a key feature of NStack that lets you define the sort of data your function can take as input, and produce as output. This helps you ensure that your module can be reused and works as intended in production.
 
-In this instance, we want to expose one method, ``numChars``, which takes ``Text`` and returns an ``Integer``.
+In this instance, we want to expose one function, ``numChars``, which takes ``Text`` and returns an ``Integer``.
 
 
 Step 2: ``build``
@@ -87,20 +87,20 @@ To build and publish our module on NStack, we use the ``build`` command.
 
   ~/demo> nstack build
   Building NStack Container module demo. Please wait. This may take some time.
-  Module demo built successfully. Use `nstack list methods` to see all available methods
+  Module demo built successfully. Use `nstack list functions` to see all available functions
 
 When we run this, the code in the directory is packaged up and sent to the server, where NStack transforms it into a module.
 
 .. note:: Learn more about how NStack packages and runs your module using containers in the :ref:`Architecture <architecture>` section.
 
-We can check that our ``numChars`` method is live by running the suggested ``nstack list methods`` command:
+We can check that our ``numChars`` function is live by running the suggested ``nstack list functions`` command:
 
 .. code:: bash
 
-  ~/Demo> nstack list methods
+  ~/Demo> nstack list functions
   Demo.numChars : Text -> Integer
 
-Now that our ``numChars`` method is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to an event *source* and an event *sink* using NStack's Workflow Language. 
+Now that our ``numChars`` function is live on NStack, we can productionise it by connecting it to input and output data. We do this by attaching it to an event *source* and an event *sink* using NStack's Workflow Language. 
 
 Advanced: Framework Modules
 ---------------------------

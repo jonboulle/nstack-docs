@@ -139,7 +139,7 @@ Option             Description
 ``<primitive>``    The primitive you want to list.
 ===============    ===========
 
-Shows a list of available primitives. Support primitives are modules, workflows, methods, sources, and sinks.
+Shows a list of available primitives. Support primitives are modules, workflows, functions, sources, and sinks.
 
 ``delete`` 
 ^^^^^^^^^^^^^^^^
@@ -154,7 +154,7 @@ Option          Description
 ``<module>``    The module's name.
 ============    ============
 
-Deletes a module (and thus its methods) from NStack.
+Deletes a module (and thus its functions) from NStack.
 
 
 ``logs`` 

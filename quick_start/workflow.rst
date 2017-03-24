@@ -4,24 +4,24 @@ Building your Workflow
 =========================
 
 In the previous tutorial, we built and published a Python module `Demo` using NStack.
-This module had a single method on it, ``numChars``, which counted the number of characters in some text. Although it has been published, we cannot talk to it until we connect it to a `source` and a `sink`.
+This module had a single function on it, ``numChars``, which counted the number of characters in some text. Although it has been published, we cannot talk to it until we connect it to a `source` and a `sink`.
 In this tutorial, we're going to do this, and we'll be using an HTTP endpoint as a `source`, and NStack's built-in log as a `sink`. When we're finished, we will be able to send some text to an HTTP endpoint, and see the length of the text in our log. 
 
-.. note:: Sources generate data which gets sent to your method, and sinks receive the data which your method outputs. Learn more in :ref:`Concepts<concepts>`
+.. note:: Sources generate data which gets sent to your function, and sinks receive the data which your function outputs. Learn more in :ref:`Concepts<concepts>`
 
-Let's first refresh ourselves on what the input and output types of our method were by asking NStack:
+Let's first refresh ourselves on what the input and output types of our function were by asking NStack:
 
 .. code:: bash
   
-  > nstack list methods
+  > nstack list functions
   Demo.numChars : Text -> Integer
 
-This means that our method can be connected to any source which generates ``Text``, and can write to any sink which can take an ``Integer`` as input. 
+This means that our function can be connected to any source which generates ``Text``, and can write to any sink which can take an ``Integer`` as input. 
 
 One of the sources that NStack provides is ``http``;
 if you use this source, NStack sets up an HTTP endpoint which you can send JSON-encoded data to.
 As a sink, we are going to use the NStack ``log``,
-which is a simple sink for seeing the output from your method.
+which is a simple sink for seeing the output from your function.
 
 .. note:: See a list of available sources and sinks in :ref:`Supported Integrations <supported_integrations>`
 
@@ -41,7 +41,7 @@ Part                                             Description
 ===============================================  ===========
 ``Sources.http<Text> { http_path = "/demo" }``   Use ``http`` as a source, which creates an endpoint on ``/demo``. The ``<Text>`` statement means it can only accept and pass on Text.
 
-``Demo.numChars``                                The name of the method which we built.
+``Demo.numChars``                                The name of the function which we built.
 
 ``Sinks.log<Integer>``                           Use NStack's log as a sink. The ``<Integer>`` statement means it can only accept Integers.
 ===============================================  ===========
