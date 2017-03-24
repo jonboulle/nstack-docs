@@ -12,6 +12,7 @@ Welcome to the NStack Documentation!
     :maxdepth: 2
 
     overview
+    usecases
     concepts
     installation
     quick_start/index
