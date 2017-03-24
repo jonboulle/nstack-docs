@@ -68,9 +68,7 @@ In ``service.py``, there is a ``Service`` class. This is where we would write th
   parent: NStack.Python:0.24.0
 
   api: |
-    interface Default {
-      numChars : Text -> Integer
-    }
+    numChars : Text -> Integer
 
 We're going to focus on the ``api`` section, where you tell NStack which of the methods in your ``service.py`` you want to turn into methods on NStack,
 and their input and output schemas (also known as types).
