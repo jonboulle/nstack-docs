@@ -32,9 +32,7 @@ Sample ``nstack.yaml`` file:
     parent: NStack.Python:0.24.0
 
     api: |
-    interface Default {
-        numChars : Text -> Integer
-    }
+      numChars : Text -> Integer
 
     # (Optional) System-level packages needed
     packages: []
