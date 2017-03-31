@@ -1,6 +1,6 @@
 .. _module:
 
-Writing your Module
+Building a Module
 =========================
 
 NStack Modules contain the functions that can be used on the NStack platform. They are the building blocks which can be used to build workflows and applications.

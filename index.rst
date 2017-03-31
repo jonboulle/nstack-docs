@@ -16,6 +16,7 @@ Welcome to the NStack Documentation!
     concepts
     installation
     quick_start/index
+    advanced_start/index
     architecture
     reference/index
 

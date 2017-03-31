@@ -1,6 +1,6 @@
 .. _workflow:
 
-Building your Workflow
+Building a Workflow
 =========================
 
 In the previous tutorial, we built and published a Python module `Demo` using NStack.
