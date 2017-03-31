@@ -3,36 +3,72 @@
 Building a Workflow
 =========================
 
-In the previous tutorial, we built and published a Python module `Demo` using NStack.
-This module had a single function on it, ``numChars``, which counted the number of characters in some text. Although it has been published, we cannot talk to it until we connect it to a `source` and a `sink`.
-In this tutorial, we're going to do this, and we'll be using an HTTP endpoint as a `source`, and NStack's built-in log as a `sink`. When we're finished, we will be able to send some text to an HTTP endpoint, and see the length of the text in our log. 
+In the previous tutorial, we built and published a Python module, `Demo`.
+This module had a single function on it, ``numChars``, which counted the number of characters in some text. Although it has been published, it needs to be connected to a `source` and a `sink`.
 
 .. note:: Sources generate data which gets sent to your function, and sinks receive the data which your function outputs. Learn more in :ref:`Concepts<concepts>`
 
-Let's first refresh ourselves on what the input and output types of our function were by asking NStack:
+Let's refresh ourselves on what the input and output types of our function were by asking NStack:
 
 .. code:: bash
   
   > nstack list functions
-  Demo.numChars : Text -> Integer
+  Demo:0.0.1-SNAPSHOT.numChars : Text -> Integer
 
 This means that our function can be connected to any source which generates ``Text``, and can write to any sink which can take an ``Integer`` as input. 
 
 One of the sources that NStack provides is ``http``;
-if you use this source, NStack sets up an HTTP endpoint which you can send JSON-encoded data to.
+if you use this source, NStack sets up an HTTP endpoint which you can send ``JSON``-encoded data to.
 As a sink, we are going to use the NStack ``log``,
-which is a simple sink for seeing the output from your function.
+which is a sink for seeing the output from your function. We are going to use these two integrations in our tutorial.
 
 .. note:: See a list of available sources and sinks in :ref:`Supported Integrations <supported_integrations>`
 
-In full, our workflow is going to look like this:
+Creating a workflow module
+---------------------------
 
-.. code:: bash
-  import Demo:0.0.1 as Demo;
-  Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer>
+To write workflows, we create a special NStack workflow module, which we create in the same way we create a Python module -- by using ``init``.
 
+Let's create a new directory called ``DemoWorkflow``, ``cd`` into the directory, and create a new workflow module.
 
-NStack uses the ``|`` operator to connect statements together, just like in a shell such as ``bash``. We use it to connect together the parts to form our workflow.
+.. code :: bash
+  
+  ~/DemoWorkflow/ nstack init workflow
+  Module 'DemoWorkflow:0.0.1-SNAPSHOT' successfully initialised at /home/nstack/Demo/DemoWorkflow
+
+``init`` has created a single file, ``workflow.nml``, which is where we write our workflow module using NStack's scripting language. If we look inside the file, we see that NStack has created an example module for us. 
+
+.. note :: Just like Python modules, workflow modules are versioned.
+
+.. code :: java
+
+ module DemoWorkflow:0.0.1-SNAPSHOT {
+   import Python.Hello:0.0.1 as Hello;
+   // A sample workflow
+   def w = Sources.http<Text> { http_path = "/demo" } | Hello.numChars | Sinks.log<Integer>;
+ }
+
+This currently has a single workflow on it, ``w``, which uses a function imported from a module called ``Python.Hello`` with the version number of ``0.0.1``.
+Like the workflow we will create, this example workflow creates an HTTP endpoint which pipes data to a function, and pipes data from the function to the NStack log.
+
+When we created our Python module, we defined the input and output types of our function in our API. On NStack, sources and sinks also have types: this workflow specifies that the HTTP source only receives and passes on ``Text``, and the log only accepts ``Integer``\s. Because our Python function takes ``Text``, counts it, and returns ``Integer``\s, that means it can fit in the middle of the workflow.
+
+Writing our workflow
+--------------------
+
+First, let's change the import statement to import our *Demo* module instead of *Python.Hello*.
+
+.. code :: java
+
+ import Demo:0.0.1-SNAPSHOT as Demo;
+
+Now, let's change our workflow to use the ``numChars`` function on ``Demo``, instead of the one on ``Python.Hello``. 
+
+.. code:: java
+
+  def w = Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer>;
+
+.. note :: The http source is configured in this example to expose an endpoint on ``/demo``. If you are using the demo server, we would recommend changing ``/demo`` to something more unique -- as someone else may have already taken that endpoint.
 
 Let's break these parts to see what we're doing:
 
@@ -46,24 +82,53 @@ Part                                             Description
 ``Sinks.log<Integer>``                           Use NStack's log as a sink. The ``<Integer>`` statement means it can only accept Integers.
 ===============================================  ===========
 
-To start this workflow with NStack, we use NStack's ``start`` command. This opens a command prompt where you can type a snippet and press Ctrl+D to submit it. Alternatively, you can pipe this in from a file.
+NStack uses the ``|`` operator to connect statements together, just like in a shell such as ``bash``. 
 
-.. code:: bash
+Building our workflow
+---------------------
 
- > nstack start 
- import Demo:0.0.1 as Demo;
- Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer>
- [Ctrl + D]
- Started Sources.http<Text> { http_path = "/demo" } | Demo.numChars | Sinks.log<Integer> as process 1
+Before we start our workflow, we need to build it in the cloud with NStack. We do this in the same way we build a Python module. We save our ``workflow.nml`` file and run:
 
-We now have a live HTTP endpoint on ``localhost:8080/demo``, running as process ``1`` on NStack. The HTTP endpoint is configured to accept JSON-encoded values. We defined it to use an input schema of ``Text``, so we will be able to send it any JSON ``string``. In our JSON, we put ``params`` as the key, and our input as the value:
+.. code :: bash
+
+ ~/DemoWorkflow/ nstack build
+ Building NStack Workflow module DemoWorkflow:0.0.1-SNAPSHOT. Please wait. This may take some time.
+ Workflow module DemoWorkflow:0.0.1-SNAPSHOT built successfully. Use `nstack list all` to see all available functions.
+
+We can now see our workflow is live by using the list command.
+
+.. code :: bash
+
+  ~/DemoWorkflow/ nstack list workflows
+  DemoWorkflow:0.0.1-SNAPSHOT
+    w : Workflow
+
+This means our workflow is ready to be started.
+
+Starting and using our workflow
+---------------------------------
+
+To start our workflow in the cloud, we use the start command:
+
+.. code :: bash
+ 
+ ~/DemoWorkflow/ $ nstack start DemoWorkflow:0.0.1-SNAPSHOT.w
+
+We now have a live HTTP endpoint on ``localhost:8080/demo``. The HTTP endpoint is configured to accept JSON-encoded values. We defined it to use an input schema of ``Text``, so we will be able to send it any JSON ``string``. In our JSON, we put ``params`` as the key, and our input as the value:
 
 We can call it using ``curl``:
 
 .. code:: bash
 
- > curl -X PUT -d '{ "params" : "Foo" }' localhost:8080/demo 
- Success
+ ~/DemoWorkflow/ $ curl -X PUT -d '{ "params" : "Foo" }' localhost:8080/demo 
+ Msg Accepted
+
+When workflows are started, they become *processes* which have numerical ids. We can see the id of our process by running:
+
+.. code :: bash
+
+ ~/DemoWorkflow/ $ nstack ps 
+ 1
 
 And if we look at the log of our process, which we configured as the sink, we will be able to see the result. Because our process was started with an id of ``1``, we run the following:
 
@@ -72,4 +137,4 @@ And if we look at the log of our process, which we configured as the sink, we wi
  > nstack log 1
  Feb 17 09:59:26 nostromo nstack-server[8925]: OUTPUT: 3
 
-Great!
+Great - we can see that the output of our function (and the number of characters in "Foo") is 3.
