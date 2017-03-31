@@ -10,7 +10,7 @@ By the end of the tutorial, you will learn how to publish your code to NStack an
 
 .. note:: To learn more about modules, sources, and sinks, read :ref:`Concepts<concepts>`
 
-Make sure you have :doc:`installed NStack </installation>` and let's get going. These instructions are for the Linux and Mac OSX versions of the NStack CLI, so adjust accordingly if you are on Windows.
+Make sure you have :doc:`installed NStack </installation>` and let's get going. These instructions are for the Linux and macOS versions of the NStack CLI, so adjust accordingly if you are on Windows.
 
 .. toctree::
 

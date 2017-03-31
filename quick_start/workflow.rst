@@ -123,7 +123,7 @@ We can call it using ``curl``:
  ~/DemoWorkflow/ $ curl -X PUT -d '{ "params" : "Foo" }' localhost:8080/demo 
  Msg Accepted
 
-When workflows are started, they become *processes* which have numerical ids. We can see the id of our process by running:
+When workflows are started, they become *processes* which have numerical identifiers (_ids_). We can see the id of our process by running:
 
 .. code :: bash
 

@@ -27,7 +27,7 @@ You should see the following output confirming that this operation was successfu
   ~/Demo> nstack init python
   python module 'Demo:0.0.1-SNAPSHOT' successfully initialised at ~/Demo
 
-Because NStack versions your modules, it has given ``Demo`` a version number (``0.0.1-SNAPSHOT``). Because the version number has a ``SNAPSHOT`` appended to it, this means NStack allows you to override it everytime you build. This is helpful for development, as you do not need to constantly increase the version number. When you deem your module is ready for "release", you can remove ``SNAPSHOT`` and NStack will create a immutable version of ``0.0.1``.
+Because NStack versions your modules, it has given ``Demo`` a version number (``0.0.1-SNAPSHOT``). Because the version number has a ``SNAPSHOT`` appended to it, this means NStack allows you to override it every time you build. This is helpful for development, as you do not need to constantly increase the version number. When you deem your module is ready for release, you can remove ``SNAPSHOT`` and NStack will create an immutable version of ``0.0.1``.
 
 A successful ``init`` will have created some files.
 
